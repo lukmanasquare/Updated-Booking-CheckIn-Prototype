@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Return Seat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green-main: #006643;
+      --green-dark: #004833;
+      --teal-bar: #059784;
+      --page-bg: #eef2f4;
+      --text-dark: #1f2937;
+      --border: #d9dee3;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      --upfront: #4b32a8;
+      --premium: #005a41;
+      --preferred: #00a9e0;
+      --standard: #9ca3af;
+      --unavailable: #d7dde4;
+      --white: #ffffff;
+      --nav-muted: rgba(255, 255, 255, 0.46);
+      --nav-line: rgba(255, 255, 255, 0.22);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      font-family: inherit
+    }
+
+    .site-header {
+      background: var(--green-main);
+      color: #fff;
+      border-bottom: 3px solid #0bb39a;
+    }
+
+    .site-header-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 22px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .progress-nav-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .progress-nav {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 34px;
+      min-width: 620px;
+      padding-top: 6px;
+      padding-bottom: 22px;
+    }
+
+    .progress-line {
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 8px;
+      height: 4px;
+      background: var(--nav-line);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-line-fill {
+      height: 100%;
+      width: 34%;
+      background: #ffffff;
+      border-radius: 999px;
+    }
+
+    .progress-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 72px;
+      background: none;
+      border: none;
+      color: var(--nav-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: default;
+      padding: 0;
+    }
+
+    .progress-step.done,
+    .progress-step.active {
+      color: #fff;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress-step.done .progress-dot,
+    .progress-step.active .progress-dot {
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+    }
+
+    .progress-step.locked .progress-dot {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .top-right a {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .top-right .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .flight-detail-bar {
+      background: var(--teal-bar);
+      color: #fff;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .flight-detail-inner {
+      padding: 12px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .flight-detail-left {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .route-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .route-chip .arrow {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .flight-detail-text {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .flight-detail-badge {
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.24);
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .segment-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 8px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .segment-toggle button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .segment-toggle button.active {
+      background: #fff;
+      color: var(--teal-bar);
+    }
+
+    .back-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-inner {
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+    }
+
+    .back-link {
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green-main);
+    }
+
+    .back-link:hover {
+      color: brown;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 100px - 54px - 58px);
+    }
+
+    .main-area {
+      flex: 1;
+      padding: 30px 30px 140px;
+      overflow: auto;
+    }
+
+    .main-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .legend-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 28px 26px;
+      margin-bottom: 34px;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px 34px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .legend-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 0;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .legend-title {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .legend-copy {
+      font-size: 10px;
+      color: #6b7280;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .plane-shell {
+      position: relative;
+      background: #fff;
+      border-radius: 90px 90px 40px 40px;
+      border: 8px solid #d9e0e8;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+      padding: 74px 30px 54px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .seat-columns {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .seat-section {
+      margin-bottom: 24px;
+      padding-top: 8px;
+      border-top: 1px solid #edf1f4;
+    }
+
+    .seat-section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .seat-section-title {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    .seat-section-title.upfront {
+      color: var(--upfront)
+    }
+
+    .seat-section-title.premium {
+      color: var(--premium)
+    }
+
+    .seat-section-title.preferred {
+      color: var(--preferred)
+    }
+
+    .seat-section-title.standard {
+      color: var(--standard)
+    }
+
+    .seat-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 14px;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .row-num {
+      font-size: 12px;
+      font-weight: 900;
+      color: #c0c7cf;
+    }
+
+    .gap-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+    }
+
+    .seat {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      transition: transform .15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .seat:hover {
+      transform: scale(1.06);
+    }
+
+    .seat.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: .45;
+    }
+
+    .seat-img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .unavailable-img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .legend-unavailable-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      margin-top: 0;
+    }
+
+    .seat-bar {
+      position: fixed;
+      left: 0;
+      right: 400px;
+      bottom: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.04);
+      padding: 16px 28px;
+      z-index: 20;
+    }
+
+    .seat-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .seat-passenger {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .passenger-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 102, 67, 0.08);
+      color: var(--green-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .passenger-meta small {
+      display: block;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .passenger-meta strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green-main);
+    }
+
+    .seat-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .text-action {
+      border: none;
+      background: transparent;
+      color: var(--green-main);
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .text-action:hover {
+      color: brown;
+    }
+
+    .primary-action:hover {
+      background: var(--green-dark);
+    }
+
+    .confirm-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .primary-action {
+      border: none;
+      background: var(--green-main);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 22px rgba(0, 102, 67, 0.2);
+    }
+
+    .summary {
+      width: 400px;
+      background: #fff;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .summary-top {
+      padding: 28px 24px;
+      background: #f8fafb;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-label {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .summary-total-row .left {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--green-main);
+    }
+
+    .summary-total-row .right {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-main);
+    }
+
+    .summary-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .summary-section {
+      padding-bottom: 18px;
+      border-bottom: 1px solid #edf1f4;
+    }
+
+    .summary-section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .summary-headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #111827;
+    }
+
+    .summary-sub {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .summary-line strong {
+      color: #111827;
+      font-weight: 800;
+    }
+
+    .selected-card {
+      background: rgba(0, 102, 67, 0.05);
+      border: 1px solid rgba(0, 102, 67, 0.1);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .selected-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .selected-seat-icon {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .selected-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green-main);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .selected-sub {
+      font-size: 11px;
+      font-weight: 800;
+      color: rgba(0, 102, 67, 0.62);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .selected-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .selected-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 12px;
+      color: #475569;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .selected-list li::before {
+      content: "◉";
+      color: var(--green-main);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .confirm-wrap {
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      background: #f8fafb;
+    }
+
+    .confirm-btn {
+      width: 100%;
+      border: none;
+      background: var(--green-main);
+      color: #fff;
+      height: 58px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0, 102, 67, 0.16);
+    }
+
+    @media (max-width: 1200px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .summary {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .seat-bar {
+        right: 0;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .site-header-inner {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      .progress-nav-wrap {
+        justify-content: flex-start;
+      }
+
+      .progress-nav {
+        min-width: 700px;
+      }
+
+      .top-right {
+        justify-content: flex-start;
+      }
+
+      .legend-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .flight-detail-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .seat-bar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .legend-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-area {
+        padding: 18px 16px 160px;
+      }
+
+      .back-inner,
+      .flight-detail-inner,
+      .site-header-inner {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .plane-shell {
+        max-width: 100%;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+
+      <div class="progress-nav-wrap">
+        <nav class="progress-nav">
+          <div class="progress-line">
+            <div class="progress-line-fill"></div>
+          </div>
+
+          <div class="progress-step done">
+            <span>Flight</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step active">
+            <span>Seats</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Bags</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Add-ons</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Payment</span>
+            <span class="progress-dot"></span>
+          </div>
+        </nav>
+      </div>
+
+      <div class="top-right">
+        <a href="#">Hi, log in | sign up</a>
+        <span class="divider"></span>
+        <a href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="flight-detail-bar">
+    <div class="flight-detail-inner">
+      <div class="flight-detail-left">
+        <div class="route-chip">
+          <span>DEN</span>
+          <span class="arrow">→</span>
+          <span>DTW</span>
+        </div>
+        <div class="divider"></div>
+        <div class="flight-detail-text">Denver to Detroit</div>
+        <div class="divider"></div>
+        <div class="flight-detail-text" id="barDate">Sun, May 03</div>
+        <div class="divider"></div>
+        <div class="flight-detail-text" id="barFlight">Flight F9 456</div>
+        <div class="divider"></div>
+        <div class="flight-detail-badge">2 of 2 (Return)</div>
+      </div>
+
+      <div class="segment-toggle">
+        <button type="button" onclick="window.location.href='Outbound Seat.html'">Outbound</button>
+        <button class="active" type="button">Return</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-bar">
+    <div class="back-inner">
+      <a class="back-link" href="Outbound Seat.html">← Back to Outbound Seats</a>
+    </div>
+  </div>
+
+  <div class="layout">
+    <main class="main-area">
+      <div class="main-inner">
+        <div class="legend-card">
+          <div class="legend-grid">
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:var(--upfront)"></span>
+              <div>
+                <div class="legend-title">UPFRONT PLUS (+$54)</div>
+                <div class="legend-copy">Empty middle seat or 2x2 seat, extra legroom</div>
+              </div>
+            </div>
+
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:var(--premium)"></span>
+              <div>
+                <div class="legend-title">PREMIUM (+$25)</div>
+                <div class="legend-copy">Extra legroom</div>
+              </div>
+            </div>
+
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:var(--preferred)"></span>
+              <div>
+                <div class="legend-title">PREFERRED (+$15)</div>
+                <div class="legend-copy">Sit closer to the front, quick exit</div>
+              </div>
+            </div>
+
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:var(--standard)"></span>
+              <div>
+                <div class="legend-title">STANDARD (+$0)</div>
+              </div>
+            </div>
+
+            <div class="legend-item">
+              <img class="seat-img unavailable-img legend-unavailable-icon" src="images/canceled.png"
+                alt="Unavailable seat">
+              <div>
+                <div class="legend-title">UNAVAILABLE</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plane-shell">
+          <div class="seat-columns">
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
+            <div></div>
+            <div>D</div>
+            <div>E</div>
+            <div>F</div>
+          </div>
+
+          <div class="seat-section">
+            <div class="seat-section-title upfront">UPFRONT PLUS</div>
+
+            <div class="seat-row">
+              <button class="seat upfront" data-seat="1A" data-type="upfront" data-price="54">
+                <img class="seat-img" src="images/purple.png" alt="Seat 1A" title="Seat 1A">
+              </button>
+              <button class="seat upfront" data-seat="1B" data-type="upfront" data-price="54">
+                <img class="seat-img" src="images/purple.png" alt="Seat 1B" title="Seat 1B">
+              </button>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+              <div class="row-num">1</div>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+              <button class="seat upfront" data-seat="1F" data-type="upfront" data-price="54">
+                <img class="seat-img" src="images/purple.png" alt="Seat 1F" title="Seat 1F">
+              </button>
+            </div>
+
+            <div class="seat-row">
+              <button class="seat upfront" data-seat="2A" data-type="upfront" data-price="54"><img class="seat-img"
+                  src="images/purple.png" alt="Seat 2A" title="Seat 2A"></button>
+              <button class="seat upfront" data-seat="2B" data-type="upfront" data-price="54"><img class="seat-img"
+                  src="images/purple.png" alt="Seat 2B" title="Seat 2B"></button>
+              <button class="seat upfront" data-seat="2C" data-type="upfront" data-price="54"><img class="seat-img"
+                  src="images/purple.png" alt="Seat 2C" title="Seat 2C"></button>
+              <div class="row-num">2</div>
+              <button class="seat upfront" data-seat="2D" data-type="upfront" data-price="54"><img class="seat-img"
+                  src="images/purple.png" alt="Seat 2D" title="Seat 2D"></button>
+              <button class="seat upfront" data-seat="2E" data-type="upfront" data-price="54"><img class="seat-img"
+                  src="images/purple.png" alt="Seat 2E" title="Seat 2E"></button>
+              <button class="seat upfront" data-seat="2F" data-type="upfront" data-price="54"><img class="seat-img"
+                  src="images/purple.png" alt="Seat 2F" title="Seat 2F"></button>
+            </div>
+          </div>
+
+          <div class="seat-section">
+            <div class="seat-section-title premium">PREMIUM</div>
+            <div class="seat-row">
+              <button class="seat premium" data-seat="3A" data-type="premium" data-price="25"><img class="seat-img"
+                  src="images/lemon-green.png" alt="Seat 3A" title="Seat 3A"></button>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+              <button class="seat premium" data-seat="3C" data-type="premium" data-price="25"><img class="seat-img"
+                  src="images/lemon-green.png" alt="Seat 3C" title="Seat 3C"></button>
+              <div class="row-num">3</div>
+              <button class="seat premium" data-seat="3D" data-type="premium" data-price="25"><img class="seat-img"
+                  src="images/lemon-green.png" alt="Seat 3D" title="Seat 3D"></button>
+              <button class="seat premium" data-seat="3E" data-type="premium" data-price="25"><img class="seat-img"
+                  src="images/lemon-green.png" alt="Seat 3E" title="Seat 3E"></button>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+            </div>
+          </div>
+
+          <div class="seat-section">
+            <div class="seat-section-title preferred">PREFERRED</div>
+            <div class="seat-row">
+              <button class="seat preferred" data-seat="4A" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 4A" title="Seat 4A"></button>
+              <button class="seat preferred" data-seat="4B" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 4B" title="Seat 4B"></button>
+              <button class="seat preferred" data-seat="4C" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 4C" title="Seat 4C"></button>
+              <div class="row-num">4</div>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+              <button class="seat preferred" data-seat="4E" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 4E" title="Seat 4E"></button>
+              <div class="gap-cell">
+                <img class="seat-img unavailable-img" src="images/canceled.png" alt="Unavailable seat"
+                  title="Unavailable">
+              </div>
+            </div>
+
+            <div class="seat-row">
+              <button class="seat preferred" data-seat="5A" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 5A" title="Seat 5A"></button>
+              <button class="seat preferred" data-seat="5B" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 5B" title="Seat 5B"></button>
+              <button class="seat preferred" data-seat="5C" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 5C" title="Seat 5C"></button>
+              <div class="row-num">5</div>
+              <button class="seat preferred" data-seat="5D" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 5D" title="Seat 5D"></button>
+              <button class="seat preferred" data-seat="5E" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 5E" title="Seat 5E"></button>
+              <button class="seat preferred" data-seat="5F" data-type="preferred" data-price="15"><img class="seat-img"
+                  src="images/blue.png" alt="Seat 5F" title="Seat 5F"></button>
+            </div>
+          </div>
+
+          <div class="seat-section">
+            <div class="seat-section-title standard">STANDARD</div>
+            <div class="seat-row">
+              <button class="seat standard" data-seat="7A" data-type="standard" data-price="0"><img class="seat-img"
+                  src="images/standard.png" alt="Seat 7A" title="Seat 7A"></button>
+              <button class="seat standard" data-seat="7B" data-type="standard" data-price="0"><img class="seat-img"
+                  src="images/standard.png" alt="Seat 7B" title="Seat 7B"></button>
+              <button class="seat standard" data-seat="7C" data-type="standard" data-price="0"><img class="seat-img"
+                  src="images/standard.png" alt="Seat 7C" title="Seat 7C"></button>
+              <div class="row-num">7</div>
+              <button class="seat standard" data-seat="7D" data-type="standard" data-price="0"><img class="seat-img"
+                  src="images/standard.png" alt="Seat 7D" title="Seat 7D"></button>
+              <button class="seat standard" data-seat="7E" data-type="standard" data-price="0"><img class="seat-img"
+                  src="images/standard.png" alt="Seat 7E" title="Seat 7E"></button>
+              <button class="seat standard" data-seat="7F" data-type="standard" data-price="0"><img class="seat-img"
+                  src="images/standard.png" alt="Seat 7F" title="Seat 7F"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="summary">
+      <div class="summary-top">
+        <div class="summary-label">Your Trip Summary</div>
+        <div class="summary-total-row">
+          <span class="left">Total</span>
+          <span class="right" id="grandTotal">$338.00</span>
+        </div>
+      </div>
+
+      <div class="summary-body">
+        <div class="summary-section">
+          <div class="summary-headline">
+            <span>Outbound Flight</span>
+            <span id="outboundFlightTotal">$142.00</span>
+          </div>
+          <div class="summary-sub" id="outboundFlightSub">DTW → DEN • Apr 25, 2026</div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-headline">
+            <span>Return Flight</span>
+            <span id="returnFlightTotal">$181.00</span>
+          </div>
+          <div class="summary-sub" id="returnFlightSub">DEN → DTW • May 03, 2026</div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-headline">
+            <span>Seat Selection</span>
+            <span id="seatSelectionTotal">$15.00</span>
+          </div>
+          <div class="summary-line">
+            <span>Outbound: <strong id="outboundSeatLine">5C (Preferred)</strong></span>
+            <span id="outboundSeatPrice">$15.00</span>
+          </div>
+          <div class="summary-line">
+            <span>Return: <strong id="returnSeatLine">Not selected</strong></span>
+            <span id="returnSeatPrice">$0.00</span>
+          </div>
+        </div>
+
+        <div class="selected-card">
+          <div class="selected-card-top">
+            <img class="selected-seat-icon" id="selectedCardIcon" src="images/standard.png" alt="Selected seat icon">
+            <div>
+              <div class="selected-title" id="selectedCardTitle">Seat Selection</div>
+              <div class="selected-sub" id="selectedCardSub">Selected: Not selected</div>
+            </div>
+          </div>
+
+          <ul class="selected-list">
+            <li id="benefit1">Choose any available return seat to see the updated trip total.</li>
+            <li id="benefit2">Your default total stays at $338.00 until you confirm a return seat choice.</li>
+            <li id="benefit3">Continue to Bags will carry your confirmed return seat into the outbound bags page.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="confirm-wrap">
+        <button class="confirm-btn" id="confirmBtn">Confirm Selection</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="seat-bar">
+    <div class="seat-bar-inner">
+      <div class="seat-passenger">
+        <div class="passenger-badge">P1</div>
+        <div class="passenger-meta">
+          <small>Passenger 1</small>
+          <strong id="bottomSeatText">No Seat Selected</strong>
+        </div>
+      </div>
+
+      <div class="seat-bar-actions">
+        <button class="text-action" id="skipBtn">Skip Seats</button>
+        <button class="primary-action" id="nextFlightBtn">
+          CONTINUE TO BAGS
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const outboundSelection = JSON.parse(localStorage.getItem('outboundSelection') || 'null') || {
+      route: 'DTW → DEN',
+      date: 'Apr 25, 2026',
+      flight: 'Flight F9 123',
+      bundle: 'Premium Bundle',
+      total: 142
+    };
+
+    const returnSelection = JSON.parse(localStorage.getItem('returnSelection') || 'null') || {
+      route: 'DEN → DTW',
+      date: 'May 03, 2026',
+      flight: 'Flight F9 456',
+      bundle: 'Premium Bundle',
+      total: 181
+    };
+
+    const seatTypeMeta = {
+      upfront: {
+        label: 'Upfront Plus',
+        price: 54,
+        image: 'images/purple.png',
+        benefits: [
+          'Empty middle seat or 2x2 seat configuration.',
+          'Extra legroom for more comfort.',
+          'Front cabin convenience and faster exit.'
+        ]
+      },
+      premium: {
+        label: 'Premium',
+        price: 25,
+        image: 'images/lemon-green.png',
+        benefits: [
+          'Extra legroom for a more relaxed trip.',
+          'A more comfortable cabin location.',
+          'Great balance of comfort and value.'
+        ]
+      },
+      preferred: {
+        label: 'Preferred',
+        price: 15,
+        image: 'images/blue.png',
+        benefits: [
+          'Sit closer to the front for a quicker exit.',
+          'Secure seats together with travel companions.',
+          'A great mix of location and value.'
+        ]
+      },
+      standard: {
+        label: 'Standard',
+        price: 0,
+        image: 'images/standard.png',
+        benefits: [
+          'No extra seat charge added.',
+          'Comfortable standard cabin placement.',
+          'A budget-friendly seating option.'
+        ]
+      }
+    };
+
+    const selectedSeatImage = 'images/selected.png';
+    const emptySeat = { seat: null, type: null, price: 0 };
+
+    const seats = document.querySelectorAll('.seat');
+
+    let carriedOutboundSeat = JSON.parse(localStorage.getItem('outboundSeatSelection') || 'null') || {
+      seat: '5C',
+      type: 'preferred',
+      price: 15
+    };
+
+    if (!carriedOutboundSeat.seat || !carriedOutboundSeat.type) {
+      carriedOutboundSeat = { seat: '5C', type: 'preferred', price: 15 };
+    }
+
+    let selectedReturnSeat = JSON.parse(localStorage.getItem('returnSeatSelection') || 'null') || { ...emptySeat };
+
+    function currency(value) {
+      return `$${Number(value).toFixed(2)}`;
+    }
+
+    function updateHeaderBar() {
+      document.getElementById('barDate').textContent =
+        (returnSelection.date || 'May 03, 2026').replace(', 2026', '');
+      document.getElementById('barFlight').textContent =
+        returnSelection.flight || 'Flight F9 456';
+    }
+
+    function getSeatDisplayText(seatObj) {
+      if (!seatObj || !seatObj.seat || !seatObj.type) return 'Not selected';
+      return `${seatObj.seat} (${seatTypeMeta[seatObj.type].label})`;
+    }
+
+    function updateSeatVisuals() {
+      seats.forEach(seat => {
+        const type = seat.dataset.type;
+        const img = seat.querySelector('.seat-img');
+        if (!img) return;
+
+        if (
+          selectedReturnSeat &&
+          selectedReturnSeat.seat &&
+          seat.dataset.seat === selectedReturnSeat.seat
+        ) {
+          img.src = selectedSeatImage;
+          seat.classList.add('selected');
+        } else {
+          img.src = seatTypeMeta[type].image;
+          seat.classList.remove('selected');
+        }
+      });
+    }
+
+    function updateSelectedCard() {
+      const cardIcon = document.getElementById('selectedCardIcon');
+
+      if (!selectedReturnSeat.seat || !selectedReturnSeat.type) {
+        document.getElementById('selectedCardTitle').textContent = 'Seat Selection';
+        document.getElementById('selectedCardSub').textContent = 'Selected: Not selected';
+        document.getElementById('benefit1').textContent = 'Choose any available return seat to see the updated trip total.';
+        document.getElementById('benefit2').textContent = 'Your default total stays at $338.00 until you confirm a return seat choice.';
+        document.getElementById('benefit3').textContent = 'Continue to Bags will carry your confirmed return seat into the outbound bags page.';
+        cardIcon.src = 'images/standard.png';
+        return;
+      }
+
+      const seatMeta = seatTypeMeta[selectedReturnSeat.type];
+      document.getElementById('selectedCardTitle').textContent = `${seatMeta.label} (+$${seatMeta.price})`;
+      document.getElementById('selectedCardSub').textContent = `Selected: ${selectedReturnSeat.seat}`;
+      document.getElementById('benefit1').textContent = seatMeta.benefits[0];
+      document.getElementById('benefit2').textContent = seatMeta.benefits[1];
+      document.getElementById('benefit3').textContent = seatMeta.benefits[2];
+      cardIcon.src = selectedSeatImage;
+    }
+
+    function updateSummary() {
+      const outboundFlightTotal = Number(outboundSelection.total || 0);
+      const returnFlightTotal = Number(returnSelection.total || 0);
+      const outboundSeatPrice = Number(carriedOutboundSeat.price || 0);
+      const returnSeatPrice = Number(selectedReturnSeat.price || 0);
+      const seatTotal = outboundSeatPrice + returnSeatPrice;
+      const grandTotal = outboundFlightTotal + returnFlightTotal + seatTotal;
+
+      document.getElementById('outboundFlightTotal').textContent = currency(outboundFlightTotal);
+      document.getElementById('returnFlightTotal').textContent = currency(returnFlightTotal);
+
+      document.getElementById('outboundFlightSub').textContent =
+        `${outboundSelection.route || 'DTW → DEN'} • ${outboundSelection.date || 'Apr 25, 2026'}`;
+      document.getElementById('returnFlightSub').textContent =
+        `${returnSelection.route || 'DEN → DTW'} • ${returnSelection.date || 'May 03, 2026'}`;
+
+      document.getElementById('seatSelectionTotal').textContent = currency(seatTotal);
+
+      document.getElementById('outboundSeatLine').textContent =
+        carriedOutboundSeat.seat
+          ? getSeatDisplayText(carriedOutboundSeat)
+          : 'Not selected';
+
+      document.getElementById('outboundSeatPrice').textContent = currency(outboundSeatPrice);
+
+      document.getElementById('returnSeatLine').textContent =
+        selectedReturnSeat.seat
+          ? getSeatDisplayText(selectedReturnSeat)
+          : 'Not selected';
+
+      document.getElementById('returnSeatPrice').textContent = currency(returnSeatPrice);
+
+      document.getElementById('grandTotal').textContent = currency(grandTotal);
+
+      document.getElementById('bottomSeatText').textContent =
+        selectedReturnSeat.seat
+          ? `Seat ${selectedReturnSeat.seat} Selected`
+          : 'No Seat Selected';
+    }
+
+    function persistReturnSeat() {
+      if (selectedReturnSeat.seat) {
+        localStorage.setItem('returnSeatSelection', JSON.stringify(selectedReturnSeat));
+      } else {
+        localStorage.removeItem('returnSeatSelection');
+      }
+    }
+
+    function clearReturnSeat() {
+      selectedReturnSeat = { ...emptySeat };
+      localStorage.removeItem('returnSeatSelection');
+    }
+
+    seats.forEach(seat => {
+      seat.addEventListener('click', () => {
+        selectedReturnSeat = {
+          seat: seat.dataset.seat,
+          type: seat.dataset.type,
+          price: Number(seat.dataset.price || 0)
+        };
+
+        updateSeatVisuals();
+        updateSelectedCard();
+        updateSummary();
+      });
+    });
+
+    document.getElementById('confirmBtn').addEventListener('click', () => {
+      persistReturnSeat();
+
+      if (selectedReturnSeat.seat) {
+        alert(`Seat ${selectedReturnSeat.seat} confirmed.`);
+      } else {
+        alert('No return seat selected yet.');
+      }
+    });
+
+    document.getElementById('nextFlightBtn').addEventListener('click', () => {
+      persistReturnSeat();
+      window.location.href = 'Outbound bags.html';
+    });
+
+    document.getElementById('skipBtn').addEventListener('click', () => {
+      clearReturnSeat();
+      updateSeatVisuals();
+      updateSelectedCard();
+      updateSummary();
+    });
+
+    updateHeaderBar();
+    updateSeatVisuals();
+    updateSelectedCard();
+    updateSummary();
+  </script>
+</body>
+
+</html>

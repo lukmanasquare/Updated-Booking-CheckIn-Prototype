@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Return Flight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --green-main: #006643;
+      --green-dark: #004833;
+      --green-hover: #00cf91;
+      --page-bg: #f2f4f5;
+      --text-dark: #1f2937;
+      --border: #d9dee3;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      --olive: #c8d400;
+      --blue: #13a3db;
+      --footer-bg: #495d67;
+      --purple: #4b32a8;
+      --premium: #0c8fd7;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      font-family: inherit
+    }
+
+
+    .site-header {
+      background: var(--green-main);
+      color: #fff;
+      border-bottom: 3px solid #0bb39a;
+    }
+
+    .site-header-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 22px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .progress-nav-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .progress-nav {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 34px;
+      min-width: 620px;
+      padding-top: 6px;
+      padding-bottom: 22px;
+    }
+
+    .progress-line {
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 8px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-line-fill {
+      height: 100%;
+      width: 18%;
+      background: #ffffff;
+      border-radius: 999px;
+    }
+
+    .progress-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 72px;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.46);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: default;
+      padding: 0;
+    }
+
+    .progress-step.done,
+    .progress-step.active {
+      color: #fff;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress-step.done .progress-dot,
+    .progress-step.active .progress-dot {
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+    }
+
+    .progress-step.locked .progress-dot {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .top-right a {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .top-right .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+
+    .action-bar {
+      background: #fff;
+      border-bottom: 1px solid #d8dde3;
+    }
+
+    .action-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green-main);
+      padding: 12px 0;
+    }
+
+    .back-link:hover {
+      color: brown;
+    }
+
+    .pill-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .pill {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 26px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    .pill-discount {
+      background: var(--olive);
+      color: var(--green-main);
+    }
+
+    .pill-pass {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .page-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-summary {
+      padding: 22px 24px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .search-summary h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-summary p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .search-tools {
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-block-title {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .show-price-toggle {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .show-price-toggle button {
+      border: none;
+      background: #fff;
+      color: #4b5563;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      border-right: 1px solid var(--border);
+    }
+
+    .show-price-toggle button:last-child {
+      border-right: none;
+    }
+
+    .show-price-toggle button.active {
+      background: var(--green-main);
+      color: #fff;
+    }
+
+    .price-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafb;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--green-main);
+    }
+
+    .calendar-panel {
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .calendar-header-title {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      letter-spacing: 0.08em;
+    }
+
+    .calendar-scroll {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      min-width: 720px;
+    }
+
+    .calendar-day {
+      text-align: center;
+      padding: 16px 10px;
+      border-right: 1px solid #edf1f4;
+      cursor: pointer;
+      background: #fff;
+      transition: background .18s ease;
+    }
+
+    .calendar-day:last-child {
+      border-right: none;
+    }
+
+    .calendar-day:hover {
+      background: #f8fafb;
+    }
+
+    .calendar-day.active {
+      background: #f4fbf8;
+      box-shadow: inset 0 -3px 0 var(--green-main);
+    }
+
+    .calendar-date {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .calendar-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--green-main);
+    }
+
+    .calendar-price.dark {
+      color: #111827;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0 14px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .section-head select {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .flight-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .flight-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .flight-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 36px rgba(0, 0, 0, 0.14);
+      border-color: #b8c5cc;
+    }
+
+    .flight-card.open {
+      border-color: var(--green-main);
+    }
+
+    .flight-summary {
+      padding: 22px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+      flex-wrap: wrap;
+    }
+
+    .flight-main {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .time-block {
+      text-align: center;
+      min-width: 72px;
+    }
+
+    .time {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .airport {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+    }
+
+    .route-block {
+      min-width: 170px;
+      text-align: center;
+    }
+
+    .route-meta {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .route-line {
+      height: 2px;
+      background: #d5dce1;
+      position: relative;
+    }
+
+    .plane-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--green-main);
+      font-size: 15px;
+      background: #fff;
+      padding: 0 6px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .flight-price-side {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: auto;
+    }
+
+    .starting {
+      text-align: right;
+    }
+
+    .starting small {
+      display: block;
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .starting strong {
+      display: block;
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--green-main);
+      line-height: 1;
+    }
+
+    .expand-icon {
+      font-size: 24px;
+      color: #9ca3af;
+      font-weight: 900;
+      transition: transform .18s ease;
+    }
+
+    .flight-card.open .expand-icon {
+      transform: rotate(45deg);
+    }
+
+    .fare-area {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: #f8fafb;
+      padding: 26px 20px 24px;
+    }
+
+    .flight-card.open .fare-area {
+      display: block;
+    }
+
+    .fare-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 900;
+      margin: 0 0 22px;
+      color: #111827;
+    }
+
+    .fare-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .fare-box {
+      background: #fff;
+      border: 1px solid #cfd7dc;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 100%;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .fare-box.selected {
+      border: 2px solid var(--green-main);
+      box-shadow: 0 16px 28px rgba(0, 102, 67, 0.12);
+    }
+
+    .fare-head {
+      padding: 16px 12px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .fare-basic .fare-head {
+      background: #e5e7eb;
+      color: #1f2937;
+    }
+
+    .fare-economy .fare-head {
+      background: #005a41;
+    }
+
+    .fare-premium .fare-head {
+      background: var(--premium);
+    }
+
+    .fare-business .fare-head {
+      background: var(--purple);
+    }
+
+    .fare-body {
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .fare-tagline {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 14px;
+      min-height: 32px;
+    }
+
+    .fare-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .fare-list li {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      line-height: 1.35;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .fare-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #16a34a;
+      font-weight: 900;
+    }
+
+    .fare-list li.no::before {
+      content: "✕";
+      color: #dc2626;
+    }
+
+    .fare-bottom {
+      border-top: 1px solid #edf1f4;
+      padding-top: 18px;
+      margin-top: auto;
+    }
+
+    .fare-price {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .fare-select {
+      width: 100%;
+      height: 46px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all .18s ease;
+      border: 2px solid var(--green-main);
+      background: #fff;
+      color: var(--green-main);
+    }
+
+    .fare-select:hover {
+      background: #f2fbf7;
+    }
+
+    .fare-box.selected .fare-select {
+      background: var(--green-main);
+      color: #fff;
+      border-color: var(--green-main);
+    }
+
+    .trip-summary {
+      position: sticky;
+      top: 18px;
+      overflow: hidden;
+    }
+
+    .summary-top {
+      background: #f7faf8;
+      border-bottom: 1px solid var(--border);
+      padding: 20px 20px 18px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .summary-total-row .left {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-main);
+    }
+
+    .summary-total-row .right {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--green-main);
+      line-height: 1;
+    }
+
+    .summary-body {
+      padding: 20px;
+    }
+
+    .summary-route {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #111827;
+    }
+
+    .summary-group-title {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin: 16px 0 10px;
+    }
+
+    .summary-detail {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .summary-detail span:first-child {
+      color: #6b7280;
+      font-weight: 700;
+    }
+
+    .summary-detail span:last-child {
+      font-weight: 800;
+      color: #111827;
+      text-align: right;
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: #edf1f4;
+      margin: 16px 0;
+    }
+
+    .summary-selected {
+      color: var(--green-main) !important;
+      font-weight: 900 !important;
+    }
+
+    .summary-note {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 6px;
+      background: rgba(196, 214, 0, 0.12);
+      border: 1px solid rgba(196, 214, 0, 0.4);
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--green-main);
+      font-weight: 700;
+    }
+
+    .continue-btn {
+      width: 100%;
+      margin-top: 18px;
+      height: 52px;
+      border: none;
+      border-radius: 6px;
+      background: var(--green-main);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.16);
+    }
+
+    .continue-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .continue-btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .footer {
+      background: var(--footer-bg);
+      color: #fff;
+      margin-top: 48px;
+      padding: 42px 0 30px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .footer-brand {
+      text-align: center;
+      font-size: 54px;
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 24px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .footer-card-block {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .footer-card-block img {
+      width: 240px;
+      max-width: 100%;
+      border-radius: 6px;
+    }
+
+    .footer-copy {
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-copy p {
+      margin: 0 0 14px;
+    }
+
+    .footer-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--green-main);
+      color: #fff;
+      padding: 16px 18px;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border: 1px solid #fff;
+    }
+
+    .footer-column h4 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-column a {
+      display: block;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0 0 14px;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .greenest {
+      margin-top: 34px;
+      text-align: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 1.3;
+    }
+
+    .greenest .highlight {
+      color: #8bd234;
+    }
+
+    .greenest small {
+      display: block;
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    @media (max-width: 1100px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .trip-summary {
+        position: relative;
+        top: 0;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .fare-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .site-header-inner {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      .progress-nav {
+        justify-content: flex-start;
+        overflow: auto;
+        padding-bottom: 4px;
+      }
+
+      .top-right {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .search-summary {
+        padding: 18px;
+      }
+
+      .flight-summary {
+        padding: 18px;
+      }
+
+      .fare-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-scroll {
+        min-width: 960px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand {
+        font-size: 30px;
+      }
+
+      .search-summary h1 {
+        font-size: 22px;
+      }
+
+      .time {
+        font-size: 22px;
+      }
+
+      .starting strong {
+        font-size: 28px;
+      }
+
+      .footer-brand {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+
+      <div class="progress-nav-wrap">
+        <nav class="progress-nav">
+          <div class="progress-line">
+            <div class="progress-line-fill"></div>
+          </div>
+
+          <div class="progress-step active">
+            <span>Flight</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Seats</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Bags</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Add-ons</span>
+            <span class="progress-dot"></span>
+          </div>
+          <div class="progress-step locked">
+            <span>Payment</span>
+            <span class="progress-dot"></span>
+          </div>
+        </nav>
+      </div>
+
+      <div class="top-right">
+        <a href="#">Hi, log in | sign up</a>
+        <span class="divider"></span>
+        <a href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="action-bar">
+    <div class="action-inner">
+      <a class="back-link" href="Outbound Flight.html">← BACK TO OUTBOUND FLIGHTS</a>
+
+      <div class="pill-group">
+        <button class="pill pill-discount" type="button">JOIN DISCOUNT DEN</button>
+        <button class="pill pill-pass" type="button">GOWILD! PASS</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="page-wrap">
+    <div class="layout">
+      <section>
+        <div class="panel search-summary">
+          <div>
+            <h1>Return: DEN <span style="font-size:22px;color:#9ca3af;">→</span> DTW</h1>
+            <p id="searchMeta">Sunday, May 03, 2026 • 1 Adult • Discount Den</p>
+          </div>
+
+          <div class="search-tools">
+            <div>
+              <div class="toggle-block-title">Show Price In</div>
+              <div class="show-price-toggle">
+                <button class="active" type="button">Dollars</button>
+                <button type="button">Miles</button>
+                <button type="button">GoWild!</button>
+              </div>
+            </div>
+
+            <div class="price-type-badge">Discount Den Member Pricing Applied</div>
+          </div>
+        </div>
+
+        <div class="panel calendar-panel">
+          <div class="calendar-header">
+            <div class="calendar-header-title">View Flexible Calendar</div>
+          </div>
+          <div class="calendar-scroll" id="calendarScroll"></div>
+        </div>
+
+        <div class="section-head">
+          <h2>Select Flight</h2>
+          <select>
+            <option>Sort by Price</option>
+            <option>Sort by Duration</option>
+          </select>
+        </div>
+
+        <div class="flight-list" id="flightList"></div>
+      </section>
+
+      <aside class="panel trip-summary">
+        <div class="summary-top">
+          <div class="summary-label">Your Trip Summary</div>
+          <div class="summary-total-row">
+            <div class="left">Total:</div>
+            <div class="right" id="summaryGrandTotal">$0</div>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <div class="summary-group-title">Outbound Flight</div>
+          <div class="summary-detail">
+            <span>Date:</span>
+            <span id="outboundDate">Apr 25, 2026</span>
+          </div>
+          <div class="summary-detail">
+            <span>Route:</span>
+            <span id="outboundRoute">DTW → DEN</span>
+          </div>
+          <div class="summary-detail">
+            <span>Bundle:</span>
+            <span id="outboundBundle">Premium Bundle</span>
+          </div>
+          <div class="summary-detail">
+            <span>Total:</span>
+            <span id="outboundTotal">$142</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-group-title">Return Flight</div>
+          <div class="summary-detail">
+            <span>Date:</span>
+            <span id="returnDateSummary">May 03, 2026</span>
+          </div>
+          <div class="summary-detail">
+            <span>Route:</span>
+            <span>DEN → DTW</span>
+          </div>
+          <div class="summary-detail">
+            <span>Flight:</span>
+            <span id="returnFlightSummary">Not selected</span>
+          </div>
+          <div class="summary-detail">
+            <span>Base Fare:</span>
+            <span id="returnBaseFare">$0</span>
+          </div>
+          <div class="summary-detail">
+            <span>Bundle:</span>
+            <span id="returnBundle">Not selected</span>
+          </div>
+          <div class="summary-detail">
+            <span>Return Total:</span>
+            <span id="returnTotal">$0</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-detail">
+            <span class="summary-selected">Round Trip Total:</span>
+            <span class="summary-selected" id="summarySelectedTotal">$0</span>
+          </div>
+
+          <button class="continue-btn" id="continueBtn" disabled>Continue to Seats</button>
+
+          <div class="summary-note">
+            Your outbound selection is carried into this page. Select a return flight and bundle to complete the
+            round-trip pricing before continuing.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">FRONTIER</div>
+
+      <div class="footer-grid">
+        <div>
+          <div class="footer-card-block">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJz-Z-v1if4nJGnhDy-SUQTvfFIz86wOPiHcnoPcLof92y6gq7vtpbLmWuhhCTzRLNZpY-5BNLswc8mWagHGhGijPJCZWuRWDZGrPm6ea6Ab6B9e2WGCkqDtW66Ln1U2mAOfkaknhu9W3GZdlwUATKIP_yLoN_tiT1AnJ03DtoVfwIqlvTHHwUW9wPz6UsFJi_AafaNEnceuFdhn_2LXcEZeUYw28GBWCV5O-lJjDwKtcd86JOiNbtncwSdJFeVPrMzofLtlx3J5sA"
+              alt="Frontier Credit Card">
+            <div class="footer-copy">
+              <p>Earn 50,000 Miles after qualifying activity.</p>
+              <p>Plus, $0 Intro Annual Fee, then $99.</p>
+              <a href="#" class="footer-btn">Pre-Qualify Now</a>
+            </div>
+          </div>
+
+          <div class="greenest">
+            AMERICA'S <span class="highlight">GREENEST</span> AIRLINE
+            <small>powered by PRATT &amp; WHITNEY GTF™ ENGINES</small>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Get To Know Us</h4>
+          <a href="#">About Us</a>
+          <a href="#">Fly Greener</a>
+          <a href="#">Careers</a>
+          <a href="#">Newsroom</a>
+          <a href="#">Investor Relations</a>
+          <a href="#">Travel Agents</a>
+          <a href="#">Bizfare</a>
+          <a href="#">Group Travel</a>
+          <a href="#">Blog</a>
+          <a href="#">Frontier Store</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Need Help?</h4>
+          <a href="#">Customer Service</a>
+          <a href="#">Tips and FAQs</a>
+          <a href="#">Legal</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Optional Services</a>
+          <a href="#">New Bag Prices</a>
+          <a href="#">Privacy Notice</a>
+          <a href="#">California Privacy Policy</a>
+          <a href="#">ESG/Sustainability</a>
+          <a href="#">Contract of Carriage</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Connect With Us</h4>
+          <a href="#">Email Signup</a>
+          <a href="#">Facebook</a>
+          <a href="#">X</a>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">Pinterest</a>
+          <a href="#">YouTube</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const returnCalendar = [
+      { key: '2026-05-03', label: 'Sun, May 03', price: 78 },
+      { key: '2026-05-04', label: 'Mon, May 04', price: 115 },
+      { key: '2026-05-05', label: 'Tue, May 05', price: 130 },
+      { key: '2026-05-06', label: 'Wed, May 06', price: 85 },
+      { key: '2026-05-07', label: 'Thurs, May 07', price: 130 },
+      { key: '2026-05-08', label: 'Fri, May 08', price: 130 }
+    ];
+
+    const returnFlights = [
+      {
+        id: 'return1',
+        departTime: '3:15pm',
+        arriveTime: '6:30pm',
+        departAirport: 'DEN',
+        arriveAirport: 'DTW',
+        duration: '3H 15M (NONSTOP)'
+      },
+      {
+        id: 'return2',
+        departTime: '10:45pm',
+        arriveTime: '2:00am',
+        departAirport: 'DEN',
+        arriveAirport: 'DTW',
+        duration: '3H 15M (NONSTOP)'
+      }
+    ];
+
+    const fareMeta = {
+      basic: {
+        label: 'Basic Fare',
+        typeClass: 'fare-basic',
+        tagline: 'Travel light, save big',
+        features: [
+          { text: 'No Carry-on Bag', no: true },
+          { text: 'Personal Item' },
+          { text: 'No Seat Selection', no: true }
+        ]
+      },
+      economy: {
+        label: 'Economy Bundle',
+        typeClass: 'fare-economy',
+        tagline: 'The essential extras',
+        features: [
+          { text: 'Carry-on Bag' },
+          { text: 'Standard Seat Selection' },
+          { text: 'Boarding Group 2' }
+        ]
+      },
+      premium: {
+        label: 'Premium Bundle',
+        typeClass: 'fare-premium',
+        tagline: 'Stretch out and relax',
+        features: [
+          { text: 'Premium Stretch Seating' },
+          { text: 'Carry-on + Checked Bag' },
+          { text: 'Priority Boarding' },
+          { text: 'No Change Fees' }
+        ]
+      },
+      business: {
+        label: 'Business Bundle',
+        typeClass: 'fare-business',
+        tagline: 'Fully flexible travel',
+        features: [
+          { text: 'Upfront Seating' },
+          { text: '2 Checked Bags' },
+          { text: 'Refundable Option' }
+        ]
+      }
+    };
+
+    const fareSets = {
+      '2026-05-03': { basic: 78, economy: 123, premium: 181, business: 237 },
+      '2026-05-04': { basic: 115, economy: 160, premium: 218, business: 274 },
+      '2026-05-05': { basic: 130, economy: 175, premium: 233, business: 289 },
+      '2026-05-06': { basic: 85, economy: 130, premium: 188, business: 244 },
+      '2026-05-07': { basic: 130, economy: 175, premium: 233, business: 289 },
+      '2026-05-08': { basic: 130, economy: 175, premium: 233, business: 289 }
+    };
+
+    const defaultOutboundSelection = {
+      route: 'DTW → DEN',
+      date: 'Apr 25, 2026',
+      priceType: 'Discount Den Member',
+      flight: '8:45am DTW → 10:07am DEN',
+      bundle: 'Premium Bundle',
+      total: 142
+    };
+
+    const storedOutbound = JSON.parse(localStorage.getItem('outboundSelection') || 'null') || defaultOutboundSelection;
+
+    let activeReturnDate = '2026-05-03';
+    let selectedReturnFlightId = null;
+    let selectedReturnFareKey = null;
+
+    const calendarScroll = document.getElementById('calendarScroll');
+    const flightList = document.getElementById('flightList');
+    const continueBtn = document.getElementById('continueBtn');
+
+    function currency(val) {
+      return `$${val}`;
+    }
+
+    function getActiveCalendarItem() {
+      return returnCalendar.find(item => item.key === activeReturnDate) || returnCalendar[0];
+    }
+
+    function getFareSet() {
+      return fareSets[activeReturnDate] || fareSets['2026-05-03'];
+    }
+
+    function formatSummaryDate(dateKey) {
+      const map = {
+        '2026-05-03': 'May 03, 2026',
+        '2026-05-04': 'May 04, 2026',
+        '2026-05-05': 'May 05, 2026',
+        '2026-05-06': 'May 06, 2026',
+        '2026-05-07': 'May 07, 2026',
+        '2026-05-08': 'May 08, 2026'
+      };
+      return map[dateKey] || 'May 03, 2026';
+    }
+
+    function renderCalendar() {
+      calendarScroll.innerHTML = returnCalendar.map(item => {
+        const activeClass = item.key === activeReturnDate ? 'active' : '';
+        return `
+          <div class="calendar-day ${activeClass}" data-date="${item.key}">
+            <div class="calendar-date">${item.label}</div>
+            <div class="calendar-price ${item.key === '2026-05-03' ? '' : 'dark'}">${currency(item.price)}</div>
+          </div>
+        `;
+      }).join('');
+
+      calendarScroll.querySelectorAll('.calendar-day').forEach(day => {
+        day.addEventListener('click', () => {
+          activeReturnDate = day.dataset.date;
+          selectedReturnFlightId = null;
+          selectedReturnFareKey = null;
+          renderCalendar();
+          renderFlights();
+          updateSummary();
+        });
+      });
+    }
+
+    function buildFareBox(flightId, fareKey, selected) {
+      const fares = getFareSet();
+      const meta = fareMeta[fareKey];
+
+      return `
+        <div class="fare-box ${meta.typeClass} ${selected ? 'selected' : ''}">
+          <div class="fare-head">${meta.label}</div>
+          <div class="fare-body">
+            <div class="fare-tagline">${meta.tagline}</div>
+            <ul class="fare-list">
+              ${meta.features.map(feature => `
+                <li class="${feature.no ? 'no' : ''}">${feature.text}</li>
+              `).join('')}
+            </ul>
+            <div class="fare-bottom">
+              <div class="fare-price">${currency(fares[fareKey])}</div>
+              <button
+                class="fare-select"
+                type="button"
+                data-flight="${flightId}"
+                data-fare="${fareKey}">
+                Select
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFlights() {
+      const selectedItem = getActiveCalendarItem();
+      const fares = getFareSet();
+      const startPrice = selectedItem.price || fares.basic;
+
+      flightList.innerHTML = returnFlights.map((flight, index) => {
+        const isOpen = selectedReturnFlightId === flight.id || (selectedReturnFlightId === null && index === 0);
+        return `
+          <div class="flight-card ${isOpen ? 'open' : ''}">
+            <div class="flight-summary" data-flight-summary="${flight.id}">
+              <div class="flight-main">
+                <div class="time-block">
+                  <div class="time">${flight.departTime}</div>
+                  <div class="airport">${flight.departAirport}</div>
+                </div>
+
+                <div class="route-block">
+                  <div class="route-meta">${flight.duration}</div>
+                  <div class="route-line">
+                    <span class="plane-icon">✈</span>
+                  </div>
+                </div>
+
+                <div class="time-block">
+                  <div class="time">${flight.arriveTime}</div>
+                  <div class="airport">${flight.arriveAirport}</div>
+                </div>
+              </div>
+
+              <div class="flight-price-side">
+                <div class="starting">
+                  <small>Starting from</small>
+                  <strong>${currency(startPrice)}</strong>
+                </div>
+                <div class="expand-icon">+</div>
+              </div>
+            </div>
+
+            <div class="fare-area">
+              <h3 class="fare-title">Choose your experience</h3>
+              <div class="fare-grid">
+                ${buildFareBox(flight.id, 'basic', selectedReturnFlightId === flight.id && selectedReturnFareKey === 'basic')}
+                ${buildFareBox(flight.id, 'economy', selectedReturnFlightId === flight.id && selectedReturnFareKey === 'economy')}
+                ${buildFareBox(flight.id, 'premium', selectedReturnFlightId === flight.id && selectedReturnFareKey === 'premium')}
+                ${buildFareBox(flight.id, 'business', selectedReturnFlightId === flight.id && selectedReturnFareKey === 'business')}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('[data-flight-summary]').forEach(summary => {
+        summary.addEventListener('click', () => {
+          const id = summary.dataset.flightSummary;
+          selectedReturnFlightId = selectedReturnFlightId === id ? null : id;
+          renderFlights();
+          updateSummary();
+        });
+      });
+
+      document.querySelectorAll('.fare-select').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectedReturnFlightId = button.dataset.flight;
+          selectedReturnFareKey = button.dataset.fare;
+          renderFlights();
+          updateSummary();
+        });
+      });
+    }
+
+    function updateSummary() {
+      const selectedFlight = returnFlights.find(f => f.id === selectedReturnFlightId);
+      const activeItem = getActiveCalendarItem();
+      const fares = getFareSet();
+      const outboundTotal = Number(storedOutbound.total || 0);
+
+      document.getElementById('outboundDate').textContent = storedOutbound.date || 'Apr 25, 2026';
+      document.getElementById('outboundRoute').textContent = storedOutbound.route || 'DTW → DEN';
+      document.getElementById('outboundBundle').textContent = storedOutbound.bundle || 'Economy Bundle';
+      document.getElementById('outboundTotal').textContent = currency(outboundTotal);
+      document.getElementById('returnDateSummary').textContent = formatSummaryDate(activeReturnDate);
+      document.getElementById('searchMeta').textContent = `${activeItem.label} • 1 Adult • Discount Den`;
+
+      let returnTotal = 0;
+
+      if (selectedFlight && selectedReturnFareKey) {
+        returnTotal = fares[selectedReturnFareKey];
+        document.getElementById('returnFlightSummary').textContent =
+          `${selectedFlight.departTime} ${selectedFlight.departAirport} → ${selectedFlight.arriveTime} ${selectedFlight.arriveAirport}`;
+        document.getElementById('returnBaseFare').textContent = currency(fares.basic);
+        document.getElementById('returnBundle').textContent = fareMeta[selectedReturnFareKey].label;
+        document.getElementById('returnTotal').textContent = currency(returnTotal);
+        continueBtn.disabled = false;
+      } else {
+        document.getElementById('returnFlightSummary').textContent = 'Not selected';
+        document.getElementById('returnBaseFare').textContent = '$0';
+        document.getElementById('returnBundle').textContent = 'Not selected';
+        document.getElementById('returnTotal').textContent = '$0';
+        continueBtn.disabled = true;
+      }
+
+      const grandTotal = outboundTotal + returnTotal;
+      document.getElementById('summaryGrandTotal').textContent = currency(grandTotal);
+      document.getElementById('summarySelectedTotal').textContent = currency(grandTotal);
+    }
+
+    continueBtn.addEventListener('click', () => {
+      if (!selectedReturnFlightId || !selectedReturnFareKey) return;
+
+      const selectedFlight = returnFlights.find(f => f.id === selectedReturnFlightId);
+      const fares = getFareSet();
+
+      const returnSelection = {
+        route: 'DEN → DTW',
+        date: formatSummaryDate(activeReturnDate),
+        priceType: 'Discount Den Member',
+        flight: `${selectedFlight.departTime} ${selectedFlight.departAirport} → ${selectedFlight.arriveTime} ${selectedFlight.arriveAirport}`,
+        baseFare: fares.basic,
+        bundle: fareMeta[selectedReturnFareKey].label,
+        total: fares[selectedReturnFareKey]
+      };
+
+      localStorage.setItem('returnSelection', JSON.stringify(returnSelection));
+      window.location.href = 'Outbound Seat.html';
+    });
+
+    renderCalendar();
+    renderFlights();
+    updateSummary();
+  </script>
+</body>
+
+</html>

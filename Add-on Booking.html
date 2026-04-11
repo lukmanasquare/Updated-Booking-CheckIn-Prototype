@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Add-on Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green-main: #006643;
+      --green-dark: #004833;
+      --teal-bar: #059784;
+      --page-bg: #eef2f4;
+      --text-dark: #1f2937;
+      --muted: #6b7280;
+      --border: #d9dee3;
+      --white: #ffffff;
+      --nav-muted: rgba(255, 255, 255, 0.46);
+      --nav-line: rgba(255, 255, 255, 0.22);
+      --card: #ffffff;
+      --soft: #f8fafb;
+      --included: #e8f4ef;
+      --sticky-top: 80px;
+      --sticky-bottom-space: 180px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark)
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button,
+    input {
+      font-family: inherit
+    }
+
+    .site-header {
+      background: var(--green-main);
+      color: #fff;
+      border-bottom: 3px solid #0bb39a
+    }
+
+    .site-header-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 22px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      align-items: center;
+      gap: 16px
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 1
+    }
+
+    .progress-nav-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .progress-nav {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 34px;
+      min-width: 620px;
+      padding-top: 6px;
+      padding-bottom: 22px
+    }
+
+    .progress-line {
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 8px;
+      height: 4px;
+      background: var(--nav-line);
+      border-radius: 999px;
+      overflow: hidden
+    }
+
+    .progress-line-fill {
+      height: 100%;
+      width: 71%;
+      background: #fff;
+      border-radius: 999px
+    }
+
+    .progress-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 72px;
+      background: none;
+      border: none;
+      color: var(--nav-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0
+    }
+
+    .progress-step.done,
+    .progress-step.active {
+      color: #fff
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2
+    }
+
+    .progress-step.done .progress-dot,
+    .progress-step.active .progress-dot {
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12)
+    }
+
+    .progress-step.locked .progress-dot {
+      background: rgba(255, 255, 255, 0.22)
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px
+    }
+
+    .top-right a {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap
+    }
+
+    .top-right .sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.28)
+    }
+
+    .flight-detail-bar {
+      background: var(--teal-bar);
+      color: #fff
+    }
+
+    .flight-detail-inner {
+      padding: 12px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap
+    }
+
+    .flight-detail-left {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap
+    }
+
+    .route-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase
+    }
+
+    .flight-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.3)
+    }
+
+    .flight-detail-text {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap
+    }
+
+    .flight-detail-badge {
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.24);
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase
+    }
+
+    .segment-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 8px;
+      padding: 4px;
+      gap: 4px
+    }
+
+    .segment-toggle button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.76)
+    }
+
+    .segment-toggle button.active {
+      background: #fff;
+      color: var(--teal-bar)
+    }
+
+    .back-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .back-inner {
+      padding: 16px 22px;
+      display: flex;
+      align-items: center
+    }
+
+    .back-link {
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      letter-spacing: 0.03em
+    }
+
+    .back-link:hover {
+      color: brown;
+    }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 336px;
+      gap: 0;
+      align-items: start;
+      max-width: 1366px;
+      margin: 0 auto;
+    }
+
+    .main-column {
+      padding: 28px 22px var(--sticky-bottom-space);
+    }
+
+    .summary-column {
+      background: #fff;
+      border-left: 2px solid var(--border);
+      border-right: 2px solid var(--border);
+      border-top: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: var(--sticky-top);
+      align-self: start;
+      margin-bottom: 50px;
+    }
+
+    .intro {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4efe7, #f4faf8);
+      border: 4px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .intro h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      letter-spacing: -0.03em
+    }
+
+    .intro p {
+      margin: 8px 0 0;
+      color: #6c7683;
+      font-size: 13px;
+      font-weight: 700
+    }
+
+    .addon-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 220px 1fr
+    }
+
+    .addon-visual {
+      background: var(--soft);
+      padding: 24px;
+      border-right: 1px solid #edf1f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 170px
+    }
+
+    .addon-icon {
+      font-size: 54px;
+      line-height: 1;
+      color: #9aa6b2;
+      margin-bottom: 12px
+    }
+
+    .addon-dim {
+      font-size: 10px;
+      font-weight: 900;
+      color: #94a3b8;
+      text-transform: uppercase;
+      line-height: 1.5;
+      letter-spacing: 0.05em
+    }
+
+    .addon-content {
+      padding: 18px 18px 16px
+    }
+
+    .addon-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 10px
+    }
+
+    .addon-head h2 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #1f2937;
+      margin: 0
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase
+    }
+
+    .badge.optional {
+      background: #f2f5f7;
+      color: #6b7280
+    }
+
+    .badge.selected {
+      background: var(--included);
+      color: var(--green-main)
+    }
+
+    .addon-copy {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #667085;
+      font-weight: 600;
+      margin: 0 0 14px
+    }
+
+    .addon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #eef2f4;
+      flex-wrap: wrap
+    }
+
+    .addon-name {
+      font-size: 18px;
+      font-weight: 900;
+      color: #1f2937;
+      margin-bottom: 6px
+    }
+
+    .addon-sub {
+      font-size: 12px;
+      color: #8a94a3;
+      font-weight: 700
+    }
+
+    .addon-price {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green-main);
+      min-width: 110px;
+      text-align: right
+    }
+
+    .toggle-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer
+    }
+
+    .toggle-btn.add {
+      background: var(--green-main);
+      color: #fff
+    }
+
+    .toggle-btn.remove {
+      background: #fff;
+      color: var(--green-main);
+      border: 2px solid #d6e3de
+    }
+
+    .row-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap
+    }
+
+    .apply-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--green-main);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none
+    }
+
+    .apply-box input {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #c8ddd3;
+      background: #fff;
+      display: inline-block;
+      position: relative;
+      cursor: pointer
+    }
+
+    .apply-box input:checked {
+      background: var(--green-main);
+      border-color: var(--green-main)
+    }
+
+    .apply-box input:checked::after {
+      content: "✓";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900
+    }
+
+    .radio-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #dce4ea;
+      border-radius: 14px;
+      background: #fafcfd;
+      cursor: pointer
+    }
+
+    .radio-option.active {
+      border-color: var(--green-main);
+      background: #edf8f3;
+      box-shadow: inset 0 0 0 1px var(--green-main)
+    }
+
+    .radio-option input {
+      margin-top: 2px;
+      accent-color: var(--green-main)
+    }
+
+    .radio-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%
+    }
+
+    .radio-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: #1f2937
+    }
+
+    .radio-copy {
+      font-size: 12px;
+      color: #778191;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-top: 4px
+    }
+
+    .radio-price {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--green-main);
+      white-space: nowrap
+    }
+
+    .apply-below {
+      margin-top: 14px;
+      padding-top: 4px
+    }
+
+    .packing-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px
+    }
+
+    .packing-card h3 {
+      margin: 0 0 18px;
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em
+    }
+
+    .hazard-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px
+    }
+
+    .hazard-item {
+      text-align: center
+    }
+
+    .hazard-item .hazard-icon {
+      font-size: 30px;
+      color: #9aa6b2;
+      margin-bottom: 8px
+    }
+
+    .hazard-item .hazard-text {
+      font-size: 10px;
+      font-weight: 900;
+      color: #8b95a4;
+      text-transform: uppercase;
+      line-height: 1.4
+    }
+
+    .policy-note {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 700
+    }
+
+    .policy-note a {
+      color: var(--green-main);
+      text-decoration: underline
+    }
+
+    .summary-card {
+      background: #fff;
+      padding-bottom: 30px;
+    }
+
+    .summary-head {
+      padding: 24px 20px 18px;
+      border-bottom: 1px solid #e3e8ec
+    }
+
+    .summary-eyebrow {
+      font-size: 12px;
+      font-weight: 900;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 14px
+    }
+
+    .summary-total-label {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .summary-total-value {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-main);
+      letter-spacing: -0.03em
+    }
+
+    .summary-body {
+      padding: 18px 20px
+    }
+
+    .summary-group {
+      padding: 16px 0;
+      border-bottom: 1px solid #edf1f4
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 6px
+    }
+
+    .summary-label {
+      font-size: 12px;
+      font-weight: 900;
+      color: #111827;
+      text-transform: uppercase
+    }
+
+    .summary-value {
+      font-size: 12px;
+      font-weight: 900;
+      color: #111827;
+      white-space: nowrap
+    }
+
+    .summary-sub {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 700;
+      line-height: 1.6
+    }
+
+    .summary-sub-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 4px
+    }
+
+    .summary-highlight {
+      color: var(--green-main)
+    }
+
+    .action-stack {
+      padding: 12px 20px 0
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      height: 56px;
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      display: block
+    }
+
+    .primary-btn {
+      background: var(--green-main);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(0, 102, 67, 0.2)
+    }
+
+    .primary-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .secondary-btn {
+      background: #fff;
+      color: var(--green-main);
+      border: 2px solid #d6e3de;
+      margin-bottom: 12px
+    }
+
+    .secondary-btn:hover {
+      background: brown;
+      color: white;
+    }
+
+    .info-box {
+      margin: 18px 20px 0;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #d7e8df;
+      background: #f7fbf9
+    }
+
+    .info-box h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--green-main);
+      text-transform: uppercase
+    }
+
+    .info-box li {
+      font-size: 12px;
+      font-weight: 700;
+      color: #556070;
+      line-height: 1.55
+    }
+
+    .info-box ul {
+      margin: 0;
+      padding-left: 18px
+    }
+
+    .info-box li+li {
+      margin-top: 8px
+    }
+
+    footer {
+      background: #526673;
+      color: #fff;
+      margin-top: 0;
+      padding: 40px 0 26px
+    }
+
+    .footer-inner {
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 0 22px
+    }
+
+    .footer-brand {
+      font-size: 48px;
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 26px
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr 1fr 1fr;
+      gap: 34px;
+      align-items: start
+    }
+
+    .promo-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start
+    }
+
+    .promo-box {
+      width: 170px;
+      height: 170px;
+      background: #fff;
+      border-radius: 4px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end
+    }
+
+    .card-graphic {
+      width: 100%;
+      height: 72px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0c6d3e, #0a3d2f)
+    }
+
+    .promo-copy {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45
+    }
+
+    .promo-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #007a4d;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.25)
+    }
+
+    .footer-col h5 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #fff
+    }
+
+    .footer-col a {
+      display: block;
+      color: #e8eef2;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 2
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      font-size: 11px;
+      color: #d8e0e5;
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
+    @media (max-width: 1180px) {
+      .site-header-inner {
+        grid-template-columns: 180px 1fr 220px
+      }
+
+      .progress-nav {
+        min-width: 520px;
+        gap: 24px
+      }
+
+      .page-shell {
+        grid-template-columns: 1fr
+      }
+
+      .summary-column {
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .summary-column {
+        position: static;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site-header-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        height: auto;
+        padding-top: 18px;
+        padding-bottom: 18px
+      }
+
+      .top-right {
+        display: none
+      }
+
+      .progress-nav {
+        min-width: 100%;
+        gap: 18px
+      }
+
+      .flight-detail-inner {
+        align-items: flex-start
+      }
+
+      .addon-card {
+        grid-template-columns: 1fr
+      }
+
+      .addon-visual {
+        border-right: none;
+        border-bottom: 1px solid #edf1f4;
+        min-height: 120px
+      }
+
+      .hazard-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+      <div class="progress-nav-wrap">
+        <div class="progress-nav">
+          <div class="progress-line">
+            <div class="progress-line-fill"></div>
+          </div>
+          <div class="progress-step done"><span>Flight</span><span class="progress-dot"></span></div>
+          <div class="progress-step done"><span>Seats</span><span class="progress-dot"></span></div>
+          <div class="progress-step done"><span>Bags</span><span class="progress-dot"></span></div>
+          <div class="progress-step active"><span>Add-ons</span><span class="progress-dot"></span></div>
+          <div class="progress-step locked"><span>Payment</span><span class="progress-dot"></span></div>
+        </div>
+      </div>
+      <div class="top-right">
+        <a href="#">Hi, log in</a><span class="sep"></span><a href="#">sign up</a><span class="sep"></span><a
+          href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="flight-detail-bar">
+    <div class="flight-detail-inner">
+      <div class="flight-detail-left">
+        <div class="route-chip"><span>DTW</span><span>→</span><span>DEN</span></div>
+        <div class="flight-divider"></div>
+        <div class="flight-detail-text">Detroit to Denver</div>
+        <div class="flight-divider"></div>
+        <div class="flight-detail-text">Apr 25</div>
+        <div class="flight-divider"></div>
+        <div class="flight-detail-text">Flight F9 123</div>
+        <div class="flight-detail-badge">1 of 2 (Outbound)</div>
+      </div>
+      <div class="segment-toggle">
+        <button class="active" type="button">Outbound</button>
+        <button type="button">Return</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-bar">
+    <div class="back-inner">
+      <a class="back-link" href="Return Bag.html">← Back to Bags</a>
+    </div>
+  </div>
+
+  <div class="page-shell">
+    <main class="main-column">
+      <section class="intro">
+        <div class="avatar">ADD</div>
+        <div>
+          <h1>ADD-ONS</h1>
+          <p>Customize your outbound flight. Any add-on you select is added to the trip summary and carried forward to
+            payment.</p>
+        </div>
+      </section>
+
+      <section class="addon-card">
+        <div class="addon-visual">
+          <div class="addon-icon">⚡</div>
+          <div class="addon-dim">Boarding<br>Priority Access</div>
+        </div>
+        <div class="addon-content">
+          <div class="addon-head">
+            <h2>Boarding & Priority</h2>
+            <div class="badge optional" id="boarding-badge">Optional</div>
+          </div>
+          <p class="addon-copy">Board First™ lets you board early and secure overhead bin space faster.</p>
+          <div class="addon-row">
+            <div>
+              <div class="addon-name">Board First™</div>
+              <div class="addon-sub">Priority boarding for the return flight.</div>
+            </div>
+            <div class="row-actions">
+              <div class="addon-price">$20.00</div>
+              <button class="toggle-btn add" id="boarding-toggle" type="button">Add</button>
+              <label class="apply-box"><input id="boarding-apply-return" type="checkbox"><span>Apply to Return
+                  Flight</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="addon-card">
+        <div class="addon-visual">
+          <div class="addon-icon">🧍</div>
+          <div class="addon-dim">Airport<br>Check-in Support</div>
+        </div>
+        <div class="addon-content">
+          <div class="addon-head">
+            <h2>Airport Services</h2>
+            <div class="badge optional">Choose One</div>
+          </div>
+          <p class="addon-copy">Select how you want to handle airport check-in for this trip.</p>
+          <div class="radio-stack">
+            <label class="radio-option active" data-service="self">
+              <input type="radio" name="airport-service" checked>
+              <div class="radio-label">
+                <div>
+                  <div class="radio-title">Self-Service</div>
+                  <div class="radio-copy">Use mobile check-in and manage your boarding pass digitally.</div>
+                </div>
+                <div class="radio-price">$0.00</div>
+              </div>
+            </label>
+            <label class="radio-option" data-service="agent">
+              <input type="radio" name="airport-service">
+              <div class="radio-label">
+                <div>
+                  <div class="radio-title">Airport Agent Assistance</div>
+                  <div class="radio-copy">Get help at the airport counter for check-in and document support.</div>
+                </div>
+                <div class="radio-price">$20.00</div>
+              </div>
+            </label>
+          </div>
+          <div class="apply-below">
+            <label class="apply-box"><input id="airport-apply-return" type="checkbox"><span>Apply to Return
+                Flight</span></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="addon-card">
+        <div class="addon-visual">
+          <div class="addon-icon">🚗</div>
+          <div class="addon-dim">Ground Travel<br>Rental Vehicle</div>
+        </div>
+        <div class="addon-content">
+          <div class="addon-head">
+            <h2>Rental Car</h2>
+            <div class="badge optional" id="car-badge">Optional</div>
+          </div>
+          <p class="addon-copy">Reserve a rental car for your stay and keep your travel plans connected in one booking.
+          </p>
+          <div class="addon-row">
+            <div>
+              <div class="addon-name">Budget Mid-size</div>
+              <div class="addon-sub">Toyota Corolla or similar · May 03 to May 05</div>
+            </div>
+            <div class="row-actions">
+              <div class="addon-price">$64.45</div>
+              <button class="toggle-btn add" id="car-toggle" type="button">Add</button>
+              <label class="apply-box"><input id="car-apply-return" type="checkbox"><span>Apply to Return
+                  Flight</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="packing-card">
+        <h3>Take care when packing</h3>
+        <div class="hazard-grid">
+          <div class="hazard-item">
+            <div class="hazard-icon">🔥</div>
+            <div class="hazard-text">Fireworks</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🔫</div>
+            <div class="hazard-text">Weapons</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🛢️</div>
+            <div class="hazard-text">Flammables</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🧪</div>
+            <div class="hazard-text">Corrosives</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">⛽</div>
+            <div class="hazard-text">Compressed Gas</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🧴</div>
+            <div class="hazard-text">Household Items</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🔋</div>
+            <div class="hazard-text">Lithium Batteries</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">⚠️</div>
+            <div class="hazard-text">Others</div>
+          </div>
+        </div>
+        <div class="policy-note">By continuing, I agree to the <a href="#">prohibited hazardous material policy</a>.
+        </div>
+      </section>
+    </main>
+
+    <aside class="summary-column">
+      <div class="summary-card">
+        <div class="summary-head">
+          <div class="summary-eyebrow">Your Trip Summary</div>
+          <div class="summary-total-row">
+            <div class="summary-total-label">Total</div>
+            <div class="summary-total-value" id="summary-total">$473.00</div>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Outbound Flight</div>
+              <div class="summary-value">$142.00</div>
+            </div>
+            <div class="summary-sub">DTW → DEN · Apr 25, 2026</div>
+          </div>
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Return Flight</div>
+              <div class="summary-value">$181.00</div>
+            </div>
+            <div class="summary-sub">DEN → DTW · May 03, 2026</div>
+          </div>
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Seat Selection</div>
+              <div class="summary-value summary-highlight">$40.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Outbound: 5C (Preferred)</div>
+              <div class="summary-sub">$15.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Return: 3A (Premium)</div>
+              <div class="summary-sub">$25.00</div>
+            </div>
+          </div>
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Bags (Outbound)</div>
+              <div class="summary-value summary-highlight">$55.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Carry-on: Included</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">1st checked: Included</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">2nd checked: 1 selected</div>
+              <div class="summary-sub">$55.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Weight upgrade: None</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+          </div>
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Bags (Return)</div>
+              <div class="summary-value summary-highlight">$55.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Carry-on: Included</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">1st checked: Included</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">2nd checked: 1 selected</div>
+              <div class="summary-sub">$55.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Weight upgrade: None</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+          </div>
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Add-ons</div>
+              <div class="summary-value summary-highlight" id="addons-total">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub" id="boarding-outbound-label">Board First™ Outbound: Not selected</div>
+              <div class="summary-sub" id="boarding-outbound-price">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub" id="boarding-return-label">Board First™ Return: Not applied</div>
+              <div class="summary-sub" id="boarding-return-price">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub" id="airport-outbound-label">Airport service Outbound: Self-Service</div>
+              <div class="summary-sub" id="airport-outbound-price">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub" id="airport-return-label">Airport service Return: Not applied</div>
+              <div class="summary-sub" id="airport-return-price">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub" id="car-outbound-label">Rental car Outbound: Not selected</div>
+              <div class="summary-sub" id="car-outbound-price">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub" id="car-return-label">Rental car Return: Not applied</div>
+              <div class="summary-sub" id="car-return-price">$0.00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-stack">
+          <button class="secondary-btn" id="reset-btn" type="button">Reset Add-ons</button>
+          <button class="primary-btn" id="continue-btn" type="button">Continue to Payment</button>
+        </div>
+
+        <div class="info-box">
+          <h4>Add-ons</h4>
+          <ul>
+            <li>Your default total starts at $473.00 based on your confirmed flights, seats, and bag selections carried
+              forward.</li>
+            <li>Any add-on selected is added instantly to the trip summary.</li>
+            <li>Continuing to payment saves your add-on total and description for the next page.</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">FRONTIER</div>
+      <div class="footer-grid">
+        <div class="promo-card">
+          <div class="promo-box">
+            <div class="card-graphic"></div>
+          </div>
+          <div>
+            <div class="promo-copy">Earn 50,000 Miles after qualifying activity. Plus, $0 Intro Annual Fee, then $99.
+            </div>
+            <a class="promo-btn" href="#">Pre Qualify Now</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Get to Know Us</h5><a href="#">About Us</a><a href="#">Fly Greener</a><a href="#">Careers</a><a
+            href="#">Newsroom</a><a href="#">Investor Relations</a><a href="#">Travel Agents</a>
+        </div>
+        <div class="footer-col">
+          <h5>Need Help?</h5><a href="#">Customer Service</a><a href="#">Tips and FAQs</a><a href="#">Legal</a><a
+            href="#">Accessibility</a><a href="#">Optional Services</a><a href="#">Privacy Notice</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect With Us</h5><a href="#">Email Signup</a><a href="#">Facebook</a><a href="#">X</a><a
+            href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-bottom">America's Greenest Airline</div>
+    </div>
+  </footer>
+
+  <script>
+    const BASE_TOTAL = 473.00;
+    const BOARDING_PRICE = 20.00;
+    const AIRPORT_AGENT_PRICE = 20.00;
+    const RENTAL_CAR_PRICE = 64.45;
+
+    const summaryTotalEl = document.getElementById('summary-total');
+    const addonsTotalEl = document.getElementById('addons-total');
+    const boardingToggle = document.getElementById('boarding-toggle');
+    const carToggle = document.getElementById('car-toggle');
+    const boardingBadge = document.getElementById('boarding-badge');
+    const carBadge = document.getElementById('car-badge');
+    const airportOptions = Array.from(document.querySelectorAll('.radio-option'));
+    const resetBtn = document.getElementById('reset-btn');
+    const continueBtn = document.getElementById('continue-btn');
+    const boardingApplyReturn = document.getElementById('boarding-apply-return');
+    const airportApplyReturn = document.getElementById('airport-apply-return');
+    const carApplyReturn = document.getElementById('car-apply-return');
+
+    let boardingSelected = false;
+    let airportService = 'self';
+    let carSelected = false;
+
+    function money(value) { return `$${Number(value).toFixed(2)}`; }
+    function setText(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
+    function updateToggleButton(button, selected) {
+      if (!button) return;
+      button.textContent = selected ? 'Remove' : 'Add';
+      button.classList.toggle('add', !selected);
+      button.classList.toggle('remove', selected);
+    }
+
+    function updateSummary() {
+      const boardingOutbound = boardingSelected ? BOARDING_PRICE : 0;
+      const boardingReturn = boardingSelected && boardingApplyReturn.checked ? BOARDING_PRICE : 0;
+      const airportOutbound = airportService === 'agent' ? AIRPORT_AGENT_PRICE : 0;
+      const airportReturn = airportService === 'agent' && airportApplyReturn.checked ? AIRPORT_AGENT_PRICE : 0;
+      const carOutbound = carSelected ? RENTAL_CAR_PRICE : 0;
+      const carReturn = carSelected && carApplyReturn.checked ? RENTAL_CAR_PRICE : 0;
+      const addonsTotal = boardingOutbound + boardingReturn + airportOutbound + airportReturn + carOutbound + carReturn;
+      const grandTotal = BASE_TOTAL + addonsTotal;
+
+      summaryTotalEl.textContent = money(grandTotal);
+      addonsTotalEl.textContent = money(addonsTotal);
+
+      setText('boarding-outbound-label', boardingSelected ? 'Board First™ Outbound: Selected' : 'Board First™ Outbound: Not selected');
+      setText('boarding-outbound-price', money(boardingOutbound));
+      setText('boarding-return-label', boardingApplyReturn.checked ? (boardingSelected ? 'Board First™ Return: Selected' : 'Board First™ Return: Not selected') : 'Board First™ Return: Not applied');
+      setText('boarding-return-price', money(boardingReturn));
+
+      setText('airport-outbound-label', airportService === 'agent' ? 'Airport service Outbound: Agent Assistance' : 'Airport service Outbound: Self-Service');
+      setText('airport-outbound-price', money(airportOutbound));
+      setText('airport-return-label', airportApplyReturn.checked ? (airportService === 'agent' ? 'Airport service Return: Agent Assistance' : 'Airport service Return: Self-Service') : 'Airport service Return: Not applied');
+      setText('airport-return-price', money(airportReturn));
+
+      setText('car-outbound-label', carSelected ? 'Rental car Outbound: Budget Mid-size' : 'Rental car Outbound: Not selected');
+      setText('car-outbound-price', money(carOutbound));
+      setText('car-return-label', carApplyReturn.checked ? (carSelected ? 'Rental car Return: Budget Mid-size' : 'Rental car Return: Not selected') : 'Rental car Return: Not applied');
+      setText('car-return-price', money(carReturn));
+
+      boardingBadge.textContent = boardingSelected ? 'Selected' : 'Optional';
+      boardingBadge.className = boardingSelected ? 'badge selected' : 'badge optional';
+      carBadge.textContent = carSelected ? 'Selected' : 'Optional';
+      carBadge.className = carSelected ? 'badge selected' : 'badge optional';
+
+      updateToggleButton(boardingToggle, boardingSelected);
+      updateToggleButton(carToggle, carSelected);
+
+      localStorage.setItem('frontierAddOns', JSON.stringify({
+        baseTotal: BASE_TOTAL, boardingSelected, airportService, carSelected,
+        boardingApplyReturn: boardingApplyReturn.checked,
+        airportApplyReturn: airportApplyReturn.checked,
+        carApplyReturn: carApplyReturn.checked,
+        addonsTotal, grandTotal
+      }));
+    }
+
+    boardingToggle.addEventListener('click', () => { boardingSelected = !boardingSelected; updateSummary(); });
+    carToggle.addEventListener('click', () => { carSelected = !carSelected; updateSummary(); });
+
+    airportOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        airportOptions.forEach(item => item.classList.remove('active'));
+        option.classList.add('active');
+        option.querySelector('input').checked = true;
+        airportService = option.dataset.service;
+        updateSummary();
+      });
+    });
+
+    [boardingApplyReturn, airportApplyReturn, carApplyReturn].forEach(cb => cb.addEventListener('change', updateSummary));
+
+    resetBtn.addEventListener('click', () => {
+      boardingSelected = false;
+      airportService = 'self';
+      carSelected = false;
+      boardingApplyReturn.checked = false;
+      airportApplyReturn.checked = false;
+      carApplyReturn.checked = false;
+      airportOptions.forEach(option => {
+        const active = option.dataset.service === 'self';
+        option.classList.toggle('active', active);
+        option.querySelector('input').checked = active;
+      });
+      updateSummary();
+    });
+
+    continueBtn.addEventListener('click', () => {
+      updateSummary();
+      window.location.href = 'Payment-Booking.html';
+    });
+
+    updateSummary();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Check-In Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green-main:#006643;
+      --green-dark:#004833;
+      --green-hover:#00cf91;
+      --teal:#00cf91;
+      --white:#ffffff;
+      --muted-white:rgba(255,255,255,0.72);
+      --soft-border:rgba(255,255,255,0.08);
+      --page-bg:#f8f9fa;
+      --text-dark:#1f2937;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:var(--page-bg);
+      color:var(--text-dark);
+    }
+
+    .site-header{
+      background:var(--green-main);
+      color:#fff;
+    }
+
+    .site-header-inner{
+      max-width:1280px;
+      margin:0 auto;
+      padding:0 16px;
+      height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+    }
+
+    .brand{
+      font-size:34px;
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:-0.04em;
+      text-transform:uppercase;
+      color:#fff;
+      line-height:1;
+    }
+
+    .top-nav{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:40px;
+      align-items:center;
+    }
+
+    .top-nav a,
+    .top-right a{
+      color:#fff;
+      text-decoration:none;
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .top-nav a:hover,
+    .top-right a:hover{
+      text-decoration:underline;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .top-right .divider{
+      width:1px;
+      height:14px;
+      background:rgba(255,255,255,0.28);
+    }
+
+    .alert-bar{
+      background:var(--teal);
+      color:#fff;
+    }
+
+    .alert-inner{
+      max-width:1280px;
+      margin:0 auto;
+      padding:8px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+    }
+
+    .alert-cta{
+      background:rgba(0,0,0,0.12);
+      padding:8px 12px;
+      border-radius:4px;
+    }
+
+    .hero{
+      min-height:680px;
+      background:
+        linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.1)),
+        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000');
+      background-size:cover;
+      background-position:center 30%;
+      display:flex;
+      align-items:center;
+    }
+
+    .hero-inner{
+      max-width:1280px;
+      margin:0 auto;
+      width:100%;
+      padding:48px 16px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:32px;
+      align-items:center;
+    }
+
+    .widget{
+      background:rgba(0,72,51,0.95);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--soft-border);
+      border-radius:4px;
+      overflow:hidden;
+      box-shadow:0 24px 50px rgba(0,0,0,0.28);
+      color:#fff;
+    }
+
+    .widget-top-row{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      padding:16px 24px;
+      background:var(--green-dark);
+      border-bottom:1px solid var(--soft-border);
+    }
+
+    .widget-top-link{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--muted-white);
+      line-height:1;
+      transition:all .2s ease;
+      cursor:pointer;
+      padding:12px 0;
+      border:none;
+      background:transparent;
+      font-family:inherit;
+    }
+
+    .widget-top-link:hover{
+      color:#fff;
+    }
+
+    .widget-top-link.active-primary{
+      color:var(--green-dark);
+      background:var(--green-hover);
+      padding:14px 22px;
+      border-radius:3px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .widget-second-row{
+      display:flex;
+      align-items:stretch;
+      background:rgba(0,72,51,0.55);
+      border-bottom:1px solid var(--soft-border);
+    }
+
+    .widget-second-link{
+      flex:1;
+      text-align:center;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--muted-white);
+      line-height:1;
+      padding:22px 16px 20px;
+      transition:all .2s ease;
+      cursor:pointer;
+      border:none;
+      border-bottom:4px solid transparent;
+      background:transparent;
+      font-family:inherit;
+    }
+
+    .widget-second-link:hover{
+      color:#fff;
+      background:rgba(0,207,145,0.10);
+    }
+
+    .widget-second-link.active-secondary{
+      color:#fff;
+      background:rgba(255,255,255,0.04);
+      border-bottom-color:var(--teal);
+    }
+
+    .widget-body{
+      padding:24px;
+    }
+
+    .miles-box{
+      background:#fff;
+      border-radius:4px;
+      padding:18px;
+      margin-bottom:24px;
+      color:#111827;
+    }
+
+    .miles-logo{
+      display:flex;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .miles-logo .frontier{
+      color:var(--green-main);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      letter-spacing:-0.04em;
+    }
+
+    .miles-logo .miles{
+      color:var(--green-main);
+      font-weight:800;
+      font-style:italic;
+      font-size:22px;
+      margin-left:4px;
+    }
+
+    .miles-box p{
+      margin:0;
+      font-size:14px;
+      font-weight:500;
+      line-height:1.5;
+    }
+
+    .miles-box a{
+      color:var(--teal);
+    }
+
+    .field{
+      margin-bottom:16px;
+    }
+
+    .field label{
+      display:block;
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      margin-bottom:6px;
+      opacity:.86;
+    }
+
+    .field input{
+      width:100%;
+      height:46px;
+      border:none;
+      outline:none;
+      border-radius:3px;
+      padding:0 12px;
+      font-family:inherit;
+      font-size:14px;
+      font-weight:700;
+      color:#111827;
+      background:#fff;
+    }
+
+    .search-btn{
+      width:100%;
+      height:54px;
+      border:none;
+      border-radius:3px;
+      background:var(--green-main);
+      color:#fff;
+      font-family:inherit;
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      cursor:pointer;
+      box-shadow:0 16px 30px rgba(0,0,0,0.22);
+      margin-bottom:28px;
+    }
+
+    .search-btn:hover{
+      background:var(--green-dark);
+    }
+
+    .app-strip{
+      margin:0 -24px -24px;
+      background:rgba(15,23,42,0.78);
+      padding:24px;
+      border-top:1px solid var(--soft-border);
+      text-align:center;
+    }
+
+    .app-strip h4{
+      margin:0 0 8px;
+      color:var(--green-hover);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+    }
+
+    .app-strip p{
+      margin:0 0 16px;
+      font-size:12px;
+      font-weight:500;
+      line-height:1.5;
+    }
+
+    .store-row{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .store-row img{
+      height:40px;
+    }
+
+    .hero-copy{
+      color:#fff;
+      padding-left:24px;
+      text-shadow:0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    .hero-copy h1{
+      margin:0 0 24px;
+      font-size:56px;
+      line-height:1.08;
+      font-weight:900;
+      letter-spacing:-0.03em;
+    }
+
+    .hero-images{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      margin-bottom:32px;
+    }
+
+    .hero-images img:first-child{
+      height:110px;
+      border-radius:10px;
+      box-shadow:0 20px 40px rgba(0,0,0,0.35);
+    }
+
+    .hero-images img:last-child{
+      height:88px;
+      filter:grayscale(1) brightness(2);
+    }
+
+    .primary-cta{
+      border:none;
+      background:var(--green-main);
+      color:#fff;
+      font-size:18px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      padding:16px 36px;
+      border-radius:4px;
+      cursor:pointer;
+      box-shadow:0 18px 38px rgba(0,0,0,0.28);
+    }
+
+    .primary-cta:hover{
+      background:var(--green-dark);
+    }
+
+    .pager{
+      display:flex;
+      gap:10px;
+      margin-top:28px;
+    }
+
+    .pager span{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.45);
+    }
+
+    .pager span.active{
+      background:var(--green-hover);
+    }
+
+    @media (max-width: 1024px){
+      .hero-inner{
+        grid-template-columns:1fr;
+      }
+      .hero-copy{
+        padding-left:0;
+      }
+    }
+
+    @media (max-width: 768px){
+      .top-nav{
+        display:none;
+      }
+      .hero-copy h1{
+        font-size:38px;
+      }
+      .widget-top-row{
+        gap:18px;
+        flex-wrap:wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+
+      <nav class="top-nav">
+        <a href="#">My Trips &amp; Travel Info</a>
+        <a href="#">Deals</a>
+        <a href="#"><em>FRONTIER Miles</em></a>
+      </nav>
+
+      <div class="top-right">
+        <a href="#">Hi, log in | sign up</a>
+        <span class="divider"></span>
+        <a href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="alert-bar">
+    <div class="alert-inner">
+      <span>Travel Alert</span>
+      <div class="alert-cta">Sign up for our latest deals!</div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="widget">
+        <div class="widget-top-row">
+          <button class="widget-top-link active-primary">Flight</button>
+          <button class="widget-top-link">Vacations</button>
+          <button class="widget-top-link">Hotel</button>
+          <button class="widget-top-link">Car</button>
+        </div>
+
+        <div class="widget-second-row">
+          <button class="widget-second-link" onclick="window.location.href='index.html'">Book</button>
+          <button class="widget-second-link active-secondary">Check-In</button>
+          <button class="widget-second-link">Flight Status</button>
+        </div>
+
+        <div class="widget-body">
+          <div class="miles-box">
+            <div class="miles-logo">
+              <span class="frontier">FRONTIER</span>
+              <span class="miles">Miles</span>
+            </div>
+            <p>
+              <a href="#">Log in</a> or <a href="#">sign up</a> for faster check in and earn on every flight!
+            </p>
+          </div>
+
+          <div class="field">
+            <label>Last Name*</label>
+            <input type="text" />
+          </div>
+
+          <div class="field">
+            <label>Confirmation Code*</label>
+            <input type="text" />
+          </div>
+
+          <button class="search-btn">Search</button>
+
+          <div class="app-strip">
+            <h4>Frontier Mobile App</h4>
+            <p>
+              Use our app to add bags and seats, check-in, and get your boarding pass quickly and easily.
+            </p>
+            <div class="store-row">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjuJJ8tmu118FkXOoKtV-5bIHLKdZpFEK_aNaiRnUr6lkdQk04UaxBHJWFWXp22KGY7S_NrTgKgR9lW9ocNTKtdpuLVYaMHx1XdHeq8KMh_71WbZ0XklAwXLabrWOZFvQAiH6pFpblC6PXhQUQ0tTsoli-ACoVzkkoUCOqUFvOPJ3k6F8tj5lC8IuNf1XGMTUGN36x4R6E3alSWndemoWYuvD3DuKJeRDhSn3BApXZlGGI970pPhUYPWyAexRBmGLmcArMhByUsbJ_" alt="Google Play">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhsEX5Lo1V9g-hgGrjaQyeJQohefnXnYnHQM55uWTe1u9D4bmNRxFX-TB2_T_Mq_oT9zmsdCupVPCKrd4Sj8hO-IJDtFeqwg0G_2CsiPNZ7QMibyvog1YUvLbXnnr-v-FbcJZneQ8Pi5rFLFhdTpiEIZSYXyp2QkyckJCRYOTESAbqIJxYQJaA6DuikNmXtsV8Rr4At57wnN1yQDe0-h8OF0MxgzwCzpchvsqvCNMzMFkt98Y699sJpw-aoX9IOls80yNzdDtLsykJ" alt="App Store">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <h1>
+          Earn 50,000 Miles after qualifying activity.<br>
+          Plus, $0 Intro Annual Fee, then $99.
+        </h1>
+
+        <div class="hero-images">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJz-Z-v1if4nJGnhDy-SUQTvfFIz86wOPiHcnoPcLof92y6gq7vtpbLmWuhhCTzRLNZpY-5BNLswc8mWagHGhGijPJCZWuRWDZGrPm6ea6Ab6B9e2WGCkqDtW66Ln1U2mAOfkaknhu9W3GZdlwUATKIP_yLoN_tiT1AnJ03DtoVfwIqlvTHHwUW9wPz6UsFJi_AafaNEnceuFdhn_2LXcEZeUYw28GBWCV5O-lJjDwKtcd86JOiNbtncwSdJFeVPrMzofLtlx3J5sA" alt="Frontier Credit Card">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNXmwNPDuKUGM4gapfPB1jP7gdlpqFO_tO78fjZj7bfQm4jfSACwsQbI2LpMWYRb6ExV1NsihOPqOFBSa37zlHMdUrYfXDSlv3lWB2PsKQh9Hx2JJyESlPUuouuM36sf2_n-fUy1ti0gAdNsvuq2BhQqypxBlXZJURSFrFiikY02yYd19EIrf4zSmcD05VPeda2RLUwZXy2dm5kmwfkvA6B-UtrWnxWm5pIUFzpaC4W6v6Yp6HKROHgbht4duaVusM86rLW2vk8Xq8" alt="Award">
+        </div>
+
+        <button class="primary-cta">Pre-Qualify Now</button>
+
+        <div class="pager">
+          <span class="active"></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

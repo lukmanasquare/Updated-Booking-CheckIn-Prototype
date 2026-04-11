@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Booking Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green-main: #006643;
+      --green-dark: #004833;
+      --green-hover: #00cf91;
+      --teal: #00cf91;
+      --white: #ffffff;
+      --muted-white: rgba(255, 255, 255, 0.72);
+      --soft-border: rgba(255, 255, 255, 0.08);
+      --page-bg: #f8f9fa;
+      --text-dark: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark);
+    }
+
+    .site-header {
+      background: var(--green-main);
+      color: #fff;
+    }
+
+    .site-header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .top-nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .top-nav a,
+    .top-right a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .top-nav a:hover,
+    .top-right a:hover {
+      text-decoration: underline;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .top-right .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .alert-bar {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .alert-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .alert-cta {
+      background: rgba(0, 0, 0, 0.12);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .hero {
+      min-height: 680px;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.12)),
+        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000');
+      background-size: cover;
+      background-position: center 30%;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 48px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+      position: relative;
+    }
+
+    .widget {
+      background: rgba(0, 72, 51, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--soft-border);
+      border-radius: 4px;
+      overflow: visible;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+      color: #fff;
+      position: relative;
+      z-index: 20;
+    }
+
+    .widget-top-row {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 16px 24px;
+      background: var(--green-dark);
+      border-bottom: 1px solid var(--soft-border);
+    }
+
+    .widget-top-link {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-white);
+      line-height: 1;
+      transition: all .2s ease;
+      cursor: pointer;
+      padding: 12px 0;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+    }
+
+    .widget-top-link:hover {
+      color: #fff;
+    }
+
+    .widget-top-link.active-primary {
+      color: var(--green-dark);
+      background: var(--green-hover);
+      padding: 14px 22px;
+      border-radius: 3px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .widget-second-row {
+      display: flex;
+      align-items: stretch;
+      background: rgba(0, 72, 51, 0.55);
+      border-bottom: 1px solid var(--soft-border);
+    }
+
+    .widget-second-link {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-white);
+      line-height: 1;
+      padding: 22px 16px 20px;
+      transition: all .2s ease;
+      cursor: pointer;
+      border: none;
+      border-bottom: 4px solid transparent;
+      background: transparent;
+      font-family: inherit;
+    }
+
+    .widget-second-link:hover {
+      color: #fff;
+      background: rgba(0, 207, 145, 0.10);
+    }
+
+    .widget-second-link.active-secondary {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom-color: var(--teal);
+    }
+
+    .widget-body {
+      padding: 24px;
+    }
+
+    .trip-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .trip-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      border: 1px solid var(--soft-border);
+      border-radius: 3px;
+      padding: 0 16px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .trip-pill input {
+      accent-color: var(--green-hover);
+      width: 18px;
+      height: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+      opacity: .86;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 44px;
+      border: none;
+      outline: none;
+      border-radius: 3px;
+      padding: 0 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      background: #fff;
+    }
+
+    .search-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .search-by-title {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      opacity: .86;
+    }
+
+    .search-by-options {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .search-by-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .search-by-options input {
+      accent-color: var(--green-hover);
+      width: 18px;
+      height: 18px;
+    }
+
+    .search-btn {
+      min-width: 220px;
+      height: 52px;
+      border: none;
+      border-radius: 3px;
+      background: var(--green-main);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .search-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .widget-note {
+      margin-top: 24px;
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-decoration: underline;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+
+    .hero-copy {
+      color: #fff;
+      padding-left: 24px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 24px;
+      font-size: 56px;
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-images {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-images img:first-child {
+      height: 110px;
+      border-radius: 10px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero-images img:last-child {
+      height: 88px;
+      filter: grayscale(1) brightness(2);
+    }
+
+    .primary-cta {
+      border: none;
+      background: var(--green-main);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 16px 36px;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+    }
+
+    .primary-cta:hover {
+      background: var(--green-dark);
+    }
+
+    .pager {
+      display: flex;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pager span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .pager span.active {
+      background: var(--green-hover);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        padding-left: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-nav {
+        display: none;
+      }
+
+      .hero-copy h1 {
+        font-size: 38px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .widget-top-row {
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+    }
+
+
+    .field {
+      position: relative;
+    }
+
+    .field-subtext {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .custom-select {
+      position: relative;
+    }
+
+    .custom-select-trigger {
+      width: 100%;
+      height: 44px;
+      border: none;
+      outline: none;
+      border-radius: 3px;
+      padding: 0 42px 0 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .custom-select-trigger::after {
+      content: "▼";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: #6b7280;
+      pointer-events: none;
+    }
+
+    .custom-select-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 4px);
+      background: #fff;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+      z-index: 30;
+      display: none;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .custom-select.open .custom-select-menu {
+      display: block;
+    }
+
+    .custom-select-option {
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      cursor: pointer;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fff;
+    }
+
+    .custom-select-option:last-child {
+      border-bottom: none;
+    }
+
+    .custom-select-option:hover {
+      background: #f3f4f6;
+    }
+
+    .date-input-wrap {
+      position: relative;
+    }
+
+    .date-input {
+      padding-right: 42px !important;
+      cursor: pointer;
+    }
+
+    .calendar-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      cursor: pointer;
+      color: #6b7280;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .calendar-popup {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      display: none;
+      z-index: 9999;
+      background: #fff;
+      width: 744px;
+      max-width: min(744px, calc(100vw - 32px));
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+      border-radius: 0;
+      overflow: hidden;
+    }
+
+    .calendar-popup.align-right {
+      right: 0;
+    }
+
+    .calendar-popup.open {
+      display: block;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .calendar-month {
+      border-right: 1px solid #d1d5db;
+      background: #fff;
+    }
+
+    .calendar-month:last-child {
+      border-right: none;
+    }
+
+    .calendar-month-header {
+      background: var(--green-main);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      font-size: 16px;
+      font-weight: 800;
+      position: relative;
+    }
+
+    .calendar-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .calendar-nav:disabled {
+      opacity: .35;
+      cursor: default;
+    }
+
+    .calendar-nav.left {
+      left: 8px;
+    }
+
+    .calendar-nav.right {
+      right: 8px;
+    }
+
+    .calendar-days,
+    .calendar-dates {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+    }
+
+    .calendar-days div {
+      padding: 10px 0 6px;
+      color: #425466;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .calendar-dates button,
+    .calendar-dates div {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4b5563;
+      background: #fff;
+      border: none;
+    }
+
+    .calendar-dates .muted {
+      color: #c7c9cf;
+      cursor: not-allowed;
+    }
+
+    .calendar-dates button {
+      cursor: pointer;
+      border-radius: 999px;
+      width: 32px;
+      margin: 2px auto;
+    }
+
+    .calendar-dates button:hover {
+      background: #e5f6ef;
+    }
+
+    .calendar-dates button.selected {
+      background: var(--green-main);
+      color: #fff;
+    }
+
+    .calendar-footer {
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      padding: 4px 0 10px;
+    }
+
+    .traveler-panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      background: #fff;
+      color: #111827;
+      border-radius: 3px;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+      z-index: 35;
+      display: none;
+      overflow: hidden;
+    }
+
+    .traveler-panel.open {
+      display: block;
+    }
+
+    .traveler-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #f3f4f6;
+    }
+
+    .traveler-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .traveler-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #374151;
+      line-height: 1.2;
+    }
+
+    .traveler-label small {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #6b7280;
+    }
+
+    .traveler-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .traveler-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #94a3b8;
+      background: #fff;
+      color: #4b5563;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .traveler-count {
+      min-width: 12px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .traveler-footer {
+      background: #6b7f8a;
+      color: #fff;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .promo-ribbon {
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 14px 0;
+    }
+
+    .promo-ribbon-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .promo-ribbon-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .promo-ribbon-left img {
+      height: 40px;
+      width: auto;
+    }
+
+    .promo-ribbon-left p {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #374151;
+    }
+
+    .promo-ribbon-btn {
+      background: var(--green-main);
+      color: #fff;
+      border: none;
+      padding: 12px 34px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+
+    .promo-ribbon-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .feature-split {
+      background: #fff;
+      padding: 64px 0 40px;
+    }
+
+    .feature-split-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .feature-split-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+    }
+
+    .feature-icon-circle {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: var(--green-main);
+      color: var(--green-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+    }
+
+    .feature-icon-circle.light {
+      background: rgba(0, 207, 145, 0.18);
+      color: var(--green-main);
+    }
+
+    .feature-divider {
+      width: 1px;
+      background: #e5e7eb;
+      min-height: 140px;
+    }
+
+    .feature-split-item h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-main);
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: -0.03em;
+    }
+
+    .feature-split-item p {
+      margin: 0 0 20px;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .feature-btn {
+      background: var(--green-main);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+
+    .feature-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .cards-grid-section {
+      background: #fff;
+      padding: 0 0 56px;
+    }
+
+    .cards-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      min-height: 220px;
+      background: var(--green-main);
+      color: #fff;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .info-card h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .info-card p {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 220px;
+    }
+
+    .info-card button {
+      align-self: flex-start;
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      padding: 10px 28px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+
+    .info-card button:hover {
+      background: #fff;
+      color: var(--green-main);
+    }
+
+    .home-footer {
+      background: #1e2d47;
+      color: #fff;
+      padding: 54px 0 22px;
+    }
+
+    .home-footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .home-footer-brand {
+      text-align: center;
+      font-size: 56px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      margin-bottom: 38px;
+    }
+
+    .home-footer-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr 1fr 1fr;
+      gap: 36px;
+      padding-bottom: 34px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .home-footer-promo img {
+      width: 100%;
+      max-width: 280px;
+      border-radius: 6px;
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .home-footer-promo p {
+      margin: 0 0 16px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 260px;
+    }
+
+    .home-footer-btn {
+      background: var(--green-main);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      margin-bottom: 26px;
+    }
+
+    .home-footer-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .greenest-block {
+      margin-top: 6px;
+    }
+
+    .greenest-block div:first-child {
+      font-size: 24px;
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .greenest-block div:nth-child(2) {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      color: #fff;
+    }
+
+    .greenest-block div:nth-child(2) span {
+      color: var(--green-hover);
+    }
+
+    .greenest-block small {
+      display: block;
+      margin-top: 8px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .home-footer-col h4 {
+      margin: 0 0 18px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--green-hover);
+    }
+
+    .home-footer-col a {
+      display: block;
+      margin: 0 0 12px;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .home-footer-col a:hover {
+      color: var(--green-hover);
+    }
+
+    .home-footer-bottom {
+      padding-top: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .footer-sep {
+      opacity: 0.35;
+    }
+
+    .location-strip {
+      background: #f3f4f6;
+      border-top: 1px solid #d1d5db;
+      padding: 10px 16px;
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 1024px) {
+      .feature-split-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .feature-divider {
+        display: none;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .home-footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .promo-ribbon-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .feature-split-item {
+        flex-direction: column;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .home-footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .home-footer-brand {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .calendar-popup,
+      .calendar-popup.align-right {
+        left: 0;
+        right: auto;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .calendar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-month {
+        border-right: none;
+        border-bottom: 1px solid #d1d5db;
+      }
+
+      .calendar-month:last-child {
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+
+      <nav class="top-nav">
+        <a href="#">My Trips &amp; Travel Info</a>
+        <a href="#">Deals</a>
+        <a href="#"><em>FRONTIER Miles</em></a>
+      </nav>
+
+      <div class="top-right">
+        <a href="#">Hi, log in | sign up</a>
+        <span class="divider"></span>
+        <a href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="alert-bar">
+    <div class="alert-inner">
+      <span>Travel Alert</span>
+      <div class="alert-cta">Sign up for our latest deals!</div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="widget">
+        <div class="widget-top-row">
+          <button class="widget-top-link active-primary">Flight</button>
+          <button class="widget-top-link">Vacations</button>
+          <button class="widget-top-link">Hotel</button>
+          <button class="widget-top-link">Car</button>
+        </div>
+
+        <div class="widget-second-row">
+          <button class="widget-second-link active-secondary">Book</button>
+          <button class="widget-second-link" onclick="window.location.href='Checkin Home.html'">Check-In</button>
+          <button class="widget-second-link">Flight Status</button>
+        </div>
+
+        <div class="widget-body">
+          <div class="trip-row">
+            <label class="trip-pill">
+              <input type="radio" name="trip" checked />
+              <span>Round-trip</span>
+            </label>
+            <label class="trip-pill">
+              <input type="radio" name="trip" />
+              <span>One-way</span>
+            </label>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>From*</label>
+              <div class="custom-select" data-select="from">
+                <div class="custom-select-trigger" tabindex="0">DTW - Detroit, MI</div>
+                <div class="custom-select-menu">
+                  <div class="custom-select-option" data-value="DTW - Detroit, MI" data-subtext="Detroit, MI">DTW -
+                    Detroit, MI</div>
+                  <div class="custom-select-option" data-value="ATL - Atlanta, GA" data-subtext="Atlanta, GA">ATL -
+                    Atlanta, GA</div>
+                  <div class="custom-select-option" data-value="AUS - Austin, TX" data-subtext="Austin, TX">AUS -
+                    Austin, TX</div>
+                  <div class="custom-select-option" data-value="BOS - Boston, MA" data-subtext="Boston, MA">BOS -
+                    Boston, MA</div>
+                  <div class="custom-select-option" data-value="CVG - Cincinnati, OH" data-subtext="Cincinnati, OH">CVG
+                    - Cincinnati, OH</div>
+                </div>
+              </div>
+              <div class="field-subtext" id="fromSubtext">Detroit, MI</div>
+            </div>
+            <div class="field">
+              <label>To*</label>
+              <div class="custom-select" data-select="to">
+                <div class="custom-select-trigger" tabindex="0">DEN - Denver, CO</div>
+                <div class="custom-select-menu">
+                  <div class="custom-select-option" data-value="DEN - Denver, CO" data-subtext="Denver, CO">DEN -
+                    Denver, CO</div>
+                  <div class="custom-select-option" data-value="ATL - Atlanta, GA" data-subtext="Atlanta, GA">ATL -
+                    Atlanta, GA</div>
+                  <div class="custom-select-option" data-value="AUS - Austin, TX" data-subtext="Austin, TX">AUS -
+                    Austin, TX</div>
+                  <div class="custom-select-option" data-value="BOS - Boston, MA" data-subtext="Boston, MA">BOS -
+                    Boston, MA</div>
+                  <div class="custom-select-option" data-value="CVG - Cincinnati, OH" data-subtext="Cincinnati, OH">CVG
+                    - Cincinnati, OH</div>
+                </div>
+              </div>
+              <div class="field-subtext" id="toSubtext">Denver, CO</div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Depart Date*</label>
+              <div class="date-input-wrap">
+                <input class="date-input" id="departDate" type="text" value="Feb 24, 2026" readonly />
+                <button class="calendar-btn" type="button" data-calendar-target="depart">📅</button>
+                <div class="calendar-popup" id="departCalendar"></div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Return Date*</label>
+              <div class="date-input-wrap">
+                <input class="date-input" id="returnDate" type="text" value="Feb 25, 2026" readonly />
+                <button class="calendar-btn" type="button" data-calendar-target="return">📅</button>
+                <div class="calendar-popup" id="returnCalendar"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Travelers*</label>
+              <div class="custom-select" id="travelersSelect">
+                <div class="custom-select-trigger" id="travelersTrigger" tabindex="0">1 Adult</div>
+                <div class="traveler-panel" id="travelerPanel">
+                  <div class="traveler-row">
+                    <div class="traveler-label">Adults</div>
+                    <div class="traveler-controls">
+                      <button class="traveler-btn" type="button" data-target="adults" data-action="minus">−</button>
+                      <span class="traveler-count" id="adultCount">1</span>
+                      <button class="traveler-btn" type="button" data-target="adults" data-action="plus">+</button>
+                    </div>
+                  </div>
+                  <div class="traveler-row">
+                    <div class="traveler-label">Children <small>Under 15</small></div>
+                    <div class="traveler-controls">
+                      <button class="traveler-btn" type="button" data-target="children" data-action="minus">−</button>
+                      <span class="traveler-count" id="childrenCount">0</span>
+                      <button class="traveler-btn" type="button" data-target="children" data-action="plus">+</button>
+                    </div>
+                  </div>
+                  <div class="traveler-row">
+                    <div class="traveler-label">Lap Infants <small>Under 2</small></div>
+                    <div class="traveler-controls">
+                      <button class="traveler-btn" type="button" data-target="infants" data-action="minus">−</button>
+                      <span class="traveler-count" id="infantCount">0</span>
+                      <button class="traveler-btn" type="button" data-target="infants" data-action="plus">+</button>
+                    </div>
+                  </div>
+                  <div class="traveler-footer">Kids fly free on select dates and flights with Discount Den members.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Promo Code</label>
+              <input type="text" placeholder="Enter code" />
+            </div>
+          </div>
+
+          <div class="search-row">
+            <div>
+              <div class="search-by-title">Search By*</div>
+              <div class="search-by-options">
+                <label><input type="radio" name="searchBy" checked /> <span>Dollars</span></label>
+                <label><input type="radio" name="searchBy" /> <span>Miles</span></label>
+              </div>
+            </div>
+
+            <button class="search-btn" type="button" onclick="window.location.href='Outbound Flight.html'">Search
+              Flights </button>
+          </div>
+
+          <div class="widget-note">New Bag Policy and Optional Services</div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <h1>
+          Earn 50,000 Miles after qualifying activity.<br>
+          Plus, $0 Intro Annual Fee, then $99.
+        </h1>
+
+        <div class="hero-images">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJz-Z-v1if4nJGnhDy-SUQTvfFIz86wOPiHcnoPcLof92y6gq7vtpbLmWuhhCTzRLNZpY-5BNLswc8mWagHGhGijPJCZWuRWDZGrPm6ea6Ab6B9e2WGCkqDtW66Ln1U2mAOfkaknhu9W3GZdlwUATKIP_yLoN_tiT1AnJ03DtoVfwIqlvTHHwUW9wPz6UsFJi_AafaNEnceuFdhn_2LXcEZeUYw28GBWCV5O-lJjDwKtcd86JOiNbtncwSdJFeVPrMzofLtlx3J5sA"
+            alt="Frontier Credit Card">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNXmwNPDuKUGM4gapfPB1jP7gdlpqFO_tO78fjZj7bfQm4jfSACwsQbI2LpMWYRb6ExV1NsihOPqOFBSa37zlHMdUrYfXDSlv3lWB2PsKQh9Hx2JJyESlPUuouuM36sf2_n-fUy1ti0gAdNsvuq2BhQqypxBlXZJURSFrFiikY02yYd19EIrf4zSmcD05VPeda2RLUwZXy2dm5kmwfkvA6B-UtrWnxWm5pIUFzpaC4W6v6Yp6HKROHgbht4duaVusM86rLW2vk8Xq8"
+            alt="Award">
+        </div>
+
+        <button class="primary-cta">Pre-Qualify Now</button>
+
+        <div class="pager">
+          <span class="active"></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="promo-ribbon">
+    <div class="promo-ribbon-inner">
+      <div class="promo-ribbon-left">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7mdHi2HZGqRuFMJz9HIeQTIbcApkdpM7K_Nvs5s-CqLn0UbKEotY8yUo9x6LAVgWzFKUowMvk6N_mgpnNeYFlkDC25EKgJS27xyYXgq4PYjwcyvlMy_1NfmI3M7PjTC3tPi8DbQNhCSgF9gUFHDH3nK4mQNhl1sRsXeVbxAFTQJQr4-Y6mgrpEMxs0BLdfRkmFMXLyviHoaBrJll1BR2UY62wtFnM0wLL7ruZCLKX5_o6mqphiDaY4nFzLSYp9uOiDueimWEgOYtq"
+          alt="Promo Card">
+        <p>Earn 50,000 Miles after qualifying activity. Plus, $0 Intro Annual Fee, then $99.</p>
+      </div>
+      <button class="promo-ribbon-btn">Pre-Qualify</button>
+    </div>
+  </section>
+
+  <section class="feature-split">
+    <div class="feature-split-inner">
+      <div class="feature-split-item">
+        <div class="feature-icon-circle">
+          <span>↗</span>
+        </div>
+        <div>
+          <h2>GoWild Pass</h2>
+          <p>Turn your flexibility into unlimited flights for one low price!</p>
+          <button class="feature-btn">Learn More</button>
+        </div>
+      </div>
+
+      <div class="feature-divider"></div>
+
+      <div class="feature-split-item">
+        <div class="feature-icon-circle light">
+          <span>★</span>
+        </div>
+        <div>
+          <h2>Join Frontier Miles</h2>
+          <p><em>FRONTIER Miles</em> is the most rewarding loyalty program in the sky! Join for free and get rewarded
+            for flying Frontier with exclusive benefits.</p>
+          <button class="feature-btn">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cards-grid-section">
+    <div class="cards-grid">
+      <div class="info-card">
+        <div>
+          <h3>Earn Free Flights</h3>
+          <p>Join our FRONTIER Miles frequent flyer program</p>
+        </div>
+        <button>Join Now</button>
+      </div>
+
+      <div class="info-card">
+        <div>
+          <h3>Bundle &amp; Save</h3>
+          <p>Elevate your travel experience with our bundles</p>
+        </div>
+        <button>Learn More</button>
+      </div>
+
+      <div class="info-card">
+        <div>
+          <h3>Best Hotel Deals</h3>
+          <p>Incredible prices on hotels worldwide</p>
+        </div>
+        <button>Learn More</button>
+      </div>
+
+      <div class="info-card">
+        <div>
+          <h3>FAQs</h3>
+          <p>Have questions? Browse our FAQs for more information</p>
+        </div>
+        <button>Learn More</button>
+      </div>
+
+      <div class="info-card">
+        <div>
+          <h3>Book an Activity</h3>
+          <p>Make your trip complete, add a fun activity</p>
+        </div>
+        <button>Learn More</button>
+      </div>
+
+      <div class="info-card">
+        <div>
+          <h3>Rental Car Deals</h3>
+          <p>Save up to 35% off base rates with Avis &amp; Budget</p>
+        </div>
+        <button>Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="home-footer">
+    <div class="home-footer-inner">
+      <div class="home-footer-brand">FRONTIER</div>
+
+      <div class="home-footer-grid">
+        <div class="home-footer-promo">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCER5eMM4VpcotZa5L-gae7qGLeatUTVH3_FrVWbGP6_IBqH-Yevc8o1PG10fX2rYvyFh9JIwZFLnXmpwyn4P8Lt9HdBWKSWxtaGdfXZpl_rromRvB4z554dwBiHXV0fDLXxV9_-sfaFOYRlW74IHF65W44bzcftMrCcaZu1OHOmRuO3brFQ5BMhmelL3r5jBsHSsZCC3S3cTa6J24FpP1y-wRdKKZGRrGb5YvRuMQFISW0vYjGKGmFG_FZ13mb7BIjXC7TZFpA_0X3"
+            alt="Frontier Card">
+          <p>Earn 50,000 Miles after qualifying activity.<br>Plus, $0 Intro Annual Fee, then $99.</p>
+          <button class="home-footer-btn">Pre-Qualify Now</button>
+
+          <div class="greenest-block">
+            <div>AMERICA'S</div>
+            <div><span>GREENEST</span> AIRLINE</div>
+            <small>Powered by Pratt &amp; Whitney GTF™ Engines</small>
+          </div>
+        </div>
+
+        <div class="home-footer-col">
+          <h4>Get to Know Us</h4>
+          <a href="#">About Us</a>
+          <a href="#">Fly Greener</a>
+          <a href="#">Careers</a>
+          <a href="#">Newsroom</a>
+          <a href="#">Investor Relations</a>
+          <a href="#">Travel Agents</a>
+          <a href="#">Bizfare</a>
+          <a href="#">Group Travel</a>
+          <a href="#">Blog</a>
+          <a href="#">Frontier Store</a>
+          <a href="#">Content Creator Inquiry</a>
+        </div>
+
+        <div class="home-footer-col">
+          <h4>Need Help?</h4>
+          <a href="#">Customer Service</a>
+          <a href="#">Tips and FAQs</a>
+          <a href="#">Legal</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Optional Services</a>
+          <a href="#">New Bag Prices</a>
+          <a href="#">Privacy Notice</a>
+          <a href="#">California Privacy Policy</a>
+          <a href="#">ESG/Sustainability</a>
+          <a href="#">Contract of Carriage</a>
+          <a href="#">Customer Service Plan</a>
+          <a href="#">Tarmac Delay</a>
+          <a href="#">Contingency Plan</a>
+          <a href="#">Your Privacy Choices [x]</a>
+          <a href="#">Cookie Preferences</a>
+        </div>
+
+        <div class="home-footer-col">
+          <h4>Connect With Us</h4>
+          <a href="#">✉ Email Signup</a>
+          <a href="#">ⓕ Facebook</a>
+          <a href="#">＠ X (Twitter)</a>
+          <a href="#">▣ Instagram</a>
+          <a href="#">▶ TikTok</a>
+          <a href="#">◎ Threads</a>
+        </div>
+      </div>
+
+      <div class="home-footer-bottom">
+        <span>Copyright © 2026 Frontier Airlines</span>
+        <span class="footer-sep">|</span>
+        <span>All Rights Reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="location-strip">
+    United States of America : Denver (DEN)
+  </div>
+  <script>
+    const minCalendarDate = new Date();
+    minCalendarDate.setHours(0, 0, 0, 0);
+
+    const bookingEndDate = new Date(2026, 8, 8);
+    bookingEndDate.setHours(0, 0, 0, 0);
+
+    const minimumViewMonth = new Date(minCalendarDate.getFullYear(), minCalendarDate.getMonth(), 1);
+    const currentCalendarView = {
+      departCalendar: new Date(minimumViewMonth),
+      returnCalendar: new Date(minimumViewMonth)
+    };
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    function closeAllPopups() {
+      document.querySelectorAll('.custom-select').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('.calendar-popup').forEach(el => el.classList.remove('open'));
+      document.getElementById('travelerPanel').classList.remove('open');
+    }
+
+    document.querySelectorAll('.custom-select[data-select]').forEach(select => {
+      const trigger = select.querySelector('.custom-select-trigger');
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = select.classList.contains('open');
+        closeAllPopups();
+        if (!isOpen) select.classList.add('open');
+      });
+
+      select.querySelectorAll('.custom-select-option').forEach(option => {
+        option.addEventListener('click', () => {
+          trigger.textContent = option.dataset.value;
+          const subtextId = select.dataset.select === 'from' ? 'fromSubtext' : 'toSubtext';
+          const sub = document.getElementById(subtextId);
+          if (sub) sub.textContent = option.dataset.subtext;
+          select.classList.remove('open');
+        });
+      });
+    });
+
+    const travelersTrigger = document.getElementById('travelersTrigger');
+    const travelerPanel = document.getElementById('travelerPanel');
+    travelersTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = travelerPanel.classList.contains('open');
+      closeAllPopups();
+      if (!open) travelerPanel.classList.add('open');
+    });
+
+    const travelerCounts = { adults: 1, children: 0, infants: 0 };
+    function updateTravelerDisplay() {
+      document.getElementById('adultCount').textContent = travelerCounts.adults;
+      document.getElementById('childrenCount').textContent = travelerCounts.children;
+      document.getElementById('infantCount').textContent = travelerCounts.infants;
+      const parts = [];
+      if (travelerCounts.adults) parts.push(`${travelerCounts.adults} Adult${travelerCounts.adults > 1 ? 's' : ''}`);
+      if (travelerCounts.children) parts.push(`${travelerCounts.children} Child${travelerCounts.children > 1 ? 'ren' : ''}`);
+      if (travelerCounts.infants) parts.push(`${travelerCounts.infants} Infant${travelerCounts.infants > 1 ? 's' : ''}`);
+      travelersTrigger.textContent = parts.join(', ') || '0 Travelers';
+    }
+
+    document.querySelectorAll('.traveler-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const target = btn.dataset.target;
+        const action = btn.dataset.action;
+        if (action === 'minus') {
+          const min = target === 'adults' ? 1 : 0;
+          travelerCounts[target] = Math.max(min, travelerCounts[target] - 1);
+        } else {
+          travelerCounts[target] += 1;
+        }
+        updateTravelerDisplay();
+      });
+    });
+
+    function formatDate(dateObj) {
+      return `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
+    }
+
+    function parseDateValue(value) {
+      if (!value) return null;
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) return null;
+      parsed.setHours(0, 0, 0, 0);
+      return parsed;
+    }
+
+    function buildMonthDates(monthIndex, year) {
+      const first = new Date(year, monthIndex, 1);
+      const last = new Date(year, monthIndex + 1, 0);
+      return {
+        firstDay: first.getDay(),
+        totalDays: last.getDate()
+      };
+    }
+
+    function addMonths(dateObj, months) {
+      return new Date(dateObj.getFullYear(), dateObj.getMonth() + months, 1);
+    }
+
+    function syncInitialDateValues() {
+      const departInput = document.getElementById('departDate');
+      const returnInput = document.getElementById('returnDate');
+      const departParsed = parseDateValue(departInput.value);
+      const returnParsed = parseDateValue(returnInput.value);
+      const defaultDepart = new Date(minCalendarDate);
+      const defaultReturn = new Date(minCalendarDate);
+      defaultReturn.setDate(defaultReturn.getDate() + 1);
+
+      if (!departParsed || departParsed < minCalendarDate) {
+        departInput.value = formatDate(defaultDepart);
+      }
+
+      const departFinal = parseDateValue(departInput.value) || defaultDepart;
+      if (!returnParsed || returnParsed <= departFinal) {
+        const adjustedReturn = new Date(departFinal);
+        adjustedReturn.setDate(adjustedReturn.getDate() + 1);
+        returnInput.value = formatDate(adjustedReturn);
+      }
+    }
+
+    function getVisibleMonths(popupId) {
+      const start = currentCalendarView[popupId] || new Date(minimumViewMonth);
+      return [
+        {
+          monthIndex: start.getMonth(),
+          year: start.getFullYear(),
+          title: `${start.toLocaleString('en-US', { month: 'long' })} ${start.getFullYear()}`
+        },
+        (() => {
+          const second = addMonths(start, 1);
+          return {
+            monthIndex: second.getMonth(),
+            year: second.getFullYear(),
+            title: `${second.toLocaleString('en-US', { month: 'long' })} ${second.getFullYear()}`
+          };
+        })()
+      ];
+    }
+
+    function renderCalendar(targetId, inputId) {
+      const popup = document.getElementById(targetId);
+      const selectedDate = parseDateValue(document.getElementById(inputId).value);
+      const visibleMonths = getVisibleMonths(targetId);
+      const viewStart = currentCalendarView[targetId];
+      const canGoPrev = viewStart > minimumViewMonth;
+      const maxStartMonth = new Date(bookingEndDate.getFullYear(), bookingEndDate.getMonth() - 1, 1);
+      const canGoNext = addMonths(viewStart, 2) <= maxStartMonth;
+
+      popup.classList.toggle('align-right', targetId === 'returnCalendar');
+
+      popup.innerHTML = `
+        <div class="calendar-grid">
+          ${visibleMonths.map((month, index) => {
+        const meta = buildMonthDates(month.monthIndex, month.year);
+        const blanks = Array.from({ length: meta.firstDay }).map(() => '<div></div>').join('');
+        const dateButtons = [];
+
+        for (let day = 1; day <= meta.totalDays; day++) {
+          const dateObj = new Date(month.year, month.monthIndex, day);
+          dateObj.setHours(0, 0, 0, 0);
+          const isPast = dateObj < minCalendarDate;
+          const isAfterBookingWindow = dateObj > bookingEndDate;
+          const isDisabled = isPast || isAfterBookingWindow;
+          const isSelected = selectedDate && dateObj.getTime() === selectedDate.getTime();
+
+          if (isDisabled) {
+            dateButtons.push(`<div class="muted">${day}</div>`);
+          } else {
+            dateButtons.push(`<button type="button" class="${isSelected ? 'selected' : ''}" data-date="${formatDate(dateObj)}">${day}</button>`);
+          }
+        }
+
+        return `
+              <div class="calendar-month">
+                <div class="calendar-month-header">
+                  ${index === 0 ? `<button type="button" class="calendar-nav left" aria-label="Previous month" ${canGoPrev ? '' : 'disabled'}>‹</button>` : ''}
+                  ${month.title}
+                  ${index === visibleMonths.length - 1 ? `<button type="button" class="calendar-nav right" aria-label="Next month" ${canGoNext ? '' : 'disabled'}>›</button>` : ''}
+                </div>
+                <div class="calendar-days">
+                  <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                </div>
+                <div class="calendar-dates">
+                  ${blanks}
+                  ${dateButtons.join('')}
+                </div>
+                <div class="calendar-footer">Booking through 09/08/2026</div>
+              </div>
+            `;
+      }).join('')}
+        </div>
+      `;
+
+      popup.querySelectorAll('button[data-date]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.getElementById(inputId).value = btn.dataset.date;
+          popup.classList.remove('open');
+          renderCalendar(targetId, inputId);
+        });
+      });
+
+      const prevBtn = popup.querySelector('.calendar-nav.left');
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!canGoPrev) return;
+          currentCalendarView[targetId] = addMonths(currentCalendarView[targetId], -2);
+          renderCalendar(targetId, inputId);
+          popup.classList.add('open');
+        });
+      }
+
+      const nextBtn = popup.querySelector('.calendar-nav.right');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!canGoNext) return;
+          currentCalendarView[targetId] = addMonths(currentCalendarView[targetId], 2);
+          renderCalendar(targetId, inputId);
+          popup.classList.add('open');
+        });
+      }
+    }
+
+    syncInitialDateValues();
+    renderCalendar('departCalendar', 'departDate');
+    renderCalendar('returnCalendar', 'returnDate');
+
+    document.querySelectorAll('.calendar-btn, .date-input').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const target = el.dataset.calendarTarget || (el.id === 'departDate' ? 'depart' : 'return');
+        const popupId = target + 'Calendar';
+        const popup = document.getElementById(popupId);
+        const isOpen = popup.classList.contains('open');
+        closeAllPopups();
+        if (!isOpen) {
+          renderCalendar(popupId, target === 'depart' ? 'departDate' : 'returnDate');
+          popup.classList.add('open');
+        }
+      });
+    });
+
+    document.addEventListener('click', () => closeAllPopups());
+    document.querySelectorAll('.calendar-popup, .traveler-panel').forEach(el => el.addEventListener('click', (e) => e.stopPropagation()));
+    updateTravelerDisplay();
+  </script>
+
+</body>
+
+</html>

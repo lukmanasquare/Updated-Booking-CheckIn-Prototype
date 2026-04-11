@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Outbound Bags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green-main: #006643;
+      --green-dark: #004833;
+      --teal-bar: #059784;
+      --page-bg: #eef2f4;
+      --text-dark: #1f2937;
+      --muted: #6b7280;
+      --border: #d9dee3;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      --white: #ffffff;
+      --nav-muted: rgba(255, 255, 255, 0.46);
+      --nav-line: rgba(255, 255, 255, 0.22);
+      --included: #e8f4ef;
+      --card: #ffffff;
+      --soft: #f8fafb;
+      --warning: #c4d600;
+      --sticky-top: 150px;
+      --sticky-bottom-space: 350px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark)
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      font-family: inherit
+    }
+
+    .site-header {
+      background: var(--green-main);
+      color: #fff;
+      border-bottom: 3px solid #0bb39a
+    }
+
+    .site-header-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 22px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      align-items: center;
+      gap: 16px
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 1
+    }
+
+    .progress-nav-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .progress-nav {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 34px;
+      min-width: 620px;
+      padding-top: 6px;
+      padding-bottom: 22px
+    }
+
+    .progress-line {
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 8px;
+      height: 4px;
+      background: var(--nav-line);
+      border-radius: 999px;
+      overflow: hidden
+    }
+
+    .progress-line-fill {
+      height: 100%;
+      width: 50%;
+      background: #fff;
+      border-radius: 999px
+    }
+
+    .progress-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 72px;
+      background: none;
+      border: none;
+      color: var(--nav-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0;
+      cursor: default
+    }
+
+    .progress-step.done,
+    .progress-step.active {
+      color: #fff
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2
+    }
+
+    .progress-step.done .progress-dot,
+    .progress-step.active .progress-dot {
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12)
+    }
+
+    .progress-step.locked .progress-dot {
+      background: rgba(255, 255, 255, 0.22)
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px
+    }
+
+    .top-right a {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap
+    }
+
+    .top-right .sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.28)
+    }
+
+    .flight-detail-bar {
+      background: var(--teal-bar);
+      color: #fff
+    }
+
+    .flight-detail-inner {
+      padding: 12px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap
+    }
+
+    .flight-detail-left {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap
+    }
+
+    .route-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase
+    }
+
+    .flight-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.3)
+    }
+
+    .flight-detail-text {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap
+    }
+
+    .flight-detail-badge {
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.24);
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase
+    }
+
+    .segment-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 8px;
+      padding: 4px;
+      gap: 4px
+    }
+
+    .segment-toggle button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.76)
+    }
+
+    .segment-toggle button.active {
+      background: #fff;
+      color: var(--teal-bar)
+    }
+
+    .back-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .back-inner {
+      padding: 16px 22px;
+      display: flex;
+      align-items: center
+    }
+
+    .back-link {
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      letter-spacing: 0.03em
+    }
+
+    .back-link:hover {
+      color: brown;
+    }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 336px;
+      gap: 0;
+      align-items: start;
+      max-width: 1366px;
+      margin: 0 auto;
+    }
+
+    .main-column {
+      padding: 28px 22px var(--sticky-bottom-space);
+    }
+
+    .summary-column {
+      background: #fff;
+      border-left: 2px solid var(--border);
+      border-right: 2px solid var(--border);
+      border-top: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: var(--sticky-top);
+      align-self: start;
+      margin-bottom: 50px;
+    }
+
+    .intro {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4efe7, #f4faf8);
+      border: 4px solid #fff;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .intro h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      letter-spacing: -0.03em
+    }
+
+    .intro p {
+      margin: 8px 0 0;
+      color: #6c7683;
+      font-size: 13px;
+      font-weight: 700
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      margin-bottom: 18px
+    }
+
+    .bag-row {
+      display: grid;
+      grid-template-columns: 220px 1fr
+    }
+
+    .bag-visual {
+      background: var(--soft);
+      padding: 24px;
+      border-right: 1px solid #edf1f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 170px
+    }
+
+    .bag-icon {
+      font-size: 54px;
+      line-height: 1;
+      color: #a8b1bb;
+      margin-bottom: 12px
+    }
+
+    .bag-dim {
+      font-size: 10px;
+      font-weight: 900;
+      color: #94a3b8;
+      text-transform: uppercase;
+      line-height: 1.5;
+      letter-spacing: 0.05em
+    }
+
+    .bag-content {
+      padding: 24px 26px
+    }
+
+    .bag-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 10px
+    }
+
+    .bag-title {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #1f2937;
+      margin: 0
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase
+    }
+
+    .pill.included {
+      background: var(--included);
+      color: var(--green-main)
+    }
+
+    .pill.info {
+      background: #f2f5f7;
+      color: #6b7280
+    }
+
+    .bag-copy {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #667085;
+      font-weight: 600;
+      margin: 0 0 16px
+    }
+
+    .apply-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #233042
+    }
+
+    .apply-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green-main)
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #eef2f4;
+      margin-bottom: 18px
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.03em
+    }
+
+    .section-header p {
+      margin: 6px 0 0;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 700
+    }
+
+    .selector-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid #eef2f4
+    }
+
+    .selector-row:first-of-type {
+      border-top: none;
+      padding-top: 0
+    }
+
+    .selector-title {
+      font-size: 18px;
+      font-weight: 900;
+      margin: 0 0 6px;
+      color: #1f2937
+    }
+
+    .selector-sub {
+      font-size: 12px;
+      color: #8a94a3;
+      font-weight: 700
+    }
+
+    .selector-right {
+      display: flex;
+      align-items: center;
+      gap: 18px
+    }
+
+    .selector-price {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green-main);
+      min-width: 90px;
+      text-align: right
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      border: 1px solid #dbe3e9;
+      border-radius: 12px;
+      background: #f7fafb;
+      overflow: hidden
+    }
+
+    .quantity button {
+      width: 42px;
+      height: 42px;
+      border: none;
+      background: transparent;
+      font-size: 26px;
+      color: var(--green-main);
+      font-weight: 700;
+      cursor: pointer
+    }
+
+    .quantity button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed
+    }
+
+    .quantity span {
+      min-width: 48px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: #1f2937
+    }
+
+    .weight-box {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #eef2f4
+    }
+
+    .weight-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green-main);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px
+    }
+
+    .upgrade-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .upgrade-card {
+      border: 1px solid #dce4ea;
+      border-radius: 16px;
+      padding: 16px;
+      background: #fafcfd;
+      cursor: pointer;
+      transition: 0.2s ease;
+      position: relative
+    }
+
+    .upgrade-card.active {
+      border-color: var(--green-main);
+      background: #edf8f3;
+      box-shadow: inset 0 0 0 1px var(--green-main)
+    }
+
+    .upgrade-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .upgrade-card h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 900;
+      color: #1f2937;
+      text-transform: uppercase
+    }
+
+    .upgrade-card p {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: #778191;
+      font-weight: 700;
+      line-height: 1.5
+    }
+
+    .upgrade-card .upgrade-price {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .upgrade-disabled {
+      opacity: 0.5;
+      pointer-events: none
+    }
+
+    .packing-card {
+      padding: 26px
+    }
+
+    .packing-card h3 {
+      margin: 0 0 18px;
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em
+    }
+
+    .hazard-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px
+    }
+
+    .hazard-item {
+      text-align: center
+    }
+
+    .hazard-item .hazard-icon {
+      font-size: 30px;
+      color: #9aa6b2;
+      margin-bottom: 8px
+    }
+
+    .hazard-item .hazard-text {
+      font-size: 10px;
+      font-weight: 900;
+      color: #8b95a4;
+      text-transform: uppercase;
+      line-height: 1.4
+    }
+
+    .policy-note {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 700
+    }
+
+    .policy-note a {
+      color: var(--green-main);
+      text-decoration: underline
+    }
+
+    .summary-card {
+      background: #fff;
+      padding-bottom: 30px;
+
+    }
+
+    .summary-head {
+      padding: 24px 20px 18px;
+      border-bottom: 1px solid #e3e8ec
+    }
+
+    .summary-eyebrow {
+      font-size: 12px;
+      font-weight: 900;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 14px
+    }
+
+    .summary-total-label {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .summary-total-value {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-main);
+      letter-spacing: -0.03em
+    }
+
+    .summary-body {
+      padding: 18px 20px
+    }
+
+    .summary-group {
+      padding: 16px 0;
+      border-bottom: 1px solid #edf1f4
+    }
+
+    .summary-group:last-of-type {
+      border-bottom: none
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 6px
+    }
+
+    .summary-row:last-child {
+      margin-bottom: 0
+    }
+
+    .summary-label {
+      font-size: 12px;
+      font-weight: 900;
+      color: #111827;
+      text-transform: uppercase
+    }
+
+    .summary-value {
+      font-size: 12px;
+      font-weight: 900;
+      color: #111827;
+      white-space: nowrap
+    }
+
+    .summary-sub {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 700;
+      line-height: 1.6
+    }
+
+    .summary-sub-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 4px
+    }
+
+    .summary-sub-row .summary-sub {
+      white-space: nowrap
+    }
+
+    .summary-highlight {
+      color: var(--green-main)
+    }
+
+    .action-stack {
+      padding: 12px 20px 0
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      height: 56px;
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      letter-spacing: 0.01em
+    }
+
+    .primary-btn {
+      background: var(--green-main);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(0, 102, 67, 0.2)
+    }
+
+    .primary-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .secondary-btn {
+      background: #fff;
+      color: var(--green-main);
+      border: 2px solid #d6e3de;
+      margin-bottom: 12px
+    }
+
+    .secondary-btn:hover {
+      background: brown;
+      color: white;
+    }
+
+    .info-box {
+      margin: 18px 20px 0;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #d7e8df;
+      background: #f7fbf9
+    }
+
+    .info-box h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--green-main);
+      text-transform: uppercase
+    }
+
+    .info-box p,
+    .info-box li {
+      font-size: 12px;
+      font-weight: 700;
+      color: #556070;
+      line-height: 1.55
+    }
+
+    .info-box ul {
+      margin: 0;
+      padding-left: 18px
+    }
+
+    .info-box li+li {
+      margin-top: 8px
+    }
+
+    footer {
+      background: #526673;
+      color: #fff;
+      margin-top: 0;
+      padding: 40px 0 26px
+    }
+
+    .footer-inner {
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 0 22px
+    }
+
+    .footer-brand {
+      font-size: 48px;
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 26px
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr 1fr 1fr;
+      gap: 34px;
+      align-items: start
+    }
+
+    .promo-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start
+    }
+
+    .promo-box {
+      width: 170px;
+      height: 170px;
+      background: #fff;
+      border-radius: 4px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end
+    }
+
+    .card-graphic {
+      width: 100%;
+      height: 72px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0c6d3e, #0a3d2f);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2)
+    }
+
+    .promo-copy {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45
+    }
+
+    .promo-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #007a4d;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.25)
+    }
+
+    .footer-title {
+      font-size: 30px;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 14px
+    }
+
+    .footer-col h5 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #fff
+    }
+
+    .footer-col a {
+      display: block;
+      color: #e8eef2;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 2
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      font-size: 11px;
+      color: #d8e0e5;
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
+    @media (max-width: 1180px) {
+      .site-header-inner {
+        grid-template-columns: 180px 1fr 220px
+      }
+
+      .progress-nav {
+        min-width: 520px;
+        gap: 24px;
+      }
+
+      .page-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-column {
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .summary-column {
+        position: static;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site-header-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        height: auto;
+        padding-top: 18px;
+        padding-bottom: 18px
+      }
+
+      .top-right {
+        display: none;
+      }
+
+      .progress-nav {
+        min-width: 100%;
+        gap: 18px;
+      }
+
+      .flight-detail-inner {
+        align-items: flex-start
+      }
+
+      .bag-row {
+        grid-template-columns: 1fr
+      }
+
+      .bag-visual {
+        border-right: none;
+        border-bottom: 1px solid #edf1f4;
+        min-height: 120px
+      }
+
+      .upgrade-options {
+        grid-template-columns: 1fr
+      }
+
+      .hazard-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+      <div class="progress-nav-wrap">
+        <div class="progress-nav">
+          <div class="progress-line">
+            <div class="progress-line-fill"></div>
+          </div>
+          <div class="progress-step done"><span>Flight</span><span class="progress-dot"></span></div>
+          <div class="progress-step done"><span>Seats</span><span class="progress-dot"></span></div>
+          <div class="progress-step active"><span>Bags</span><span class="progress-dot"></span></div>
+          <div class="progress-step locked"><span>Add-ons</span><span class="progress-dot"></span></div>
+          <div class="progress-step locked"><span>Payment</span><span class="progress-dot"></span></div>
+        </div>
+      </div>
+      <div class="top-right">
+        <a href="#">Hi, log in</a>
+        <span class="sep"></span>
+        <a href="#">sign up</a>
+        <span class="sep"></span>
+        <a href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="flight-detail-bar">
+    <div class="flight-detail-inner">
+      <div class="flight-detail-left">
+        <div class="route-chip"><span>DTW</span><span>→</span><span>DEN</span></div>
+        <div class="flight-divider"></div>
+        <div class="flight-detail-text">Detroit to Denver</div>
+        <div class="flight-divider"></div>
+        <div class="flight-detail-text">Apr 25</div>
+        <div class="flight-divider"></div>
+        <div class="flight-detail-text">Flight F9 123</div>
+        <div class="flight-detail-badge">1 of 2 (Outbound)</div>
+      </div>
+      <div class="segment-toggle">
+        <button class="active" type="button">Outbound</button>
+        <button type="button">Return</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-bar">
+    <div class="back-inner">
+      <a class="back-link" href="Return Seat.html">← Back to Seats</a>
+    </div>
+  </div>
+
+  <div class="page-shell">
+    <main class="main-column">
+      <section class="intro">
+        <div class="avatar">BAG</div>
+        <div>
+          <h1>Outbound Bag Choices</h1>
+          <p>Choose your outbound bags. Any paid bag option updates the trip summary and becomes the starting point for
+            Return Bags.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="bag-row">
+          <div class="bag-visual">
+            <div class="bag-icon">🧳</div>
+            <div class="bag-dim">Max 24&quot; x 16&quot; x 10&quot;</div>
+          </div>
+          <div class="bag-content">
+            <div class="bag-title-row">
+              <h2 class="bag-title">Carry-On Bag</h2>
+              <div class="pill included">Included ($0)</div>
+            </div>
+            <p class="bag-copy">Your Premium Bundle already includes one carry-on bag for this outbound flight, so the
+              trip total stays at $363.00 unless you add more bag services.</p>
+            <label class="apply-row">
+              <input type="checkbox" id="apply-return" checked>
+              <span>Apply outbound bag choices as a starting reference for the return bag page</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="bag-row">
+          <div class="bag-visual">
+            <div class="bag-icon">🛄</div>
+            <div class="bag-dim">Standard Size<br>Up to 40 lbs</div>
+          </div>
+          <div class="bag-content">
+            <div class="section-header">
+              <div>
+                <h2>Checked Bags</h2>
+                <p>Your Premium Bundle includes the 1st checked bag. Add more only if needed.</p>
+              </div>
+            </div>
+
+            <div class="selector-row">
+              <div>
+                <div class="selector-title">1st Checked Bag</div>
+                <div class="selector-sub">Included with Premium Bundle</div>
+              </div>
+              <div class="selector-right">
+                <div class="pill included">1 Included</div>
+              </div>
+            </div>
+
+            <div class="selector-row">
+              <div>
+                <div class="selector-title">2nd Checked Bag</div>
+                <div class="selector-sub">Add extra checked capacity for the outbound flight</div>
+              </div>
+              <div class="selector-right">
+                <div class="selector-price">$55 each</div>
+                <div class="quantity">
+                  <button id="minus-second" type="button">−</button>
+                  <span id="second-count">0</span>
+                  <button id="plus-second" type="button">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="weight-box">
+              <div class="weight-title">Weight Upgrade Options</div>
+              <div class="upgrade-options" id="upgrade-options">
+                <label class="upgrade-card active" data-upgrade="0">
+                  <input type="radio" name="upgrade" value="0" checked>
+                  <h4>No upgrade</h4>
+                  <p>Keep the included bag allowance with no added weight option.</p>
+                  <div class="upgrade-price">$0.00</div>
+                </label>
+                <label class="upgrade-card" data-upgrade="25">
+                  <input type="radio" name="upgrade" value="25">
+                  <h4>50 lb upgrade</h4>
+                  <p>Increase one added checked bag to the 50 lb allowance.</p>
+                  <div class="upgrade-price">+$25.00</div>
+                </label>
+                <label class="upgrade-card" data-upgrade="45">
+                  <input type="radio" name="upgrade" value="45">
+                  <h4>Overweight option</h4>
+                  <p>Use the highest allowance for one added outbound checked bag.</p>
+                  <div class="upgrade-price">+$45.00</div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="bag-row">
+          <div class="bag-visual">
+            <div class="bag-icon">🎒</div>
+            <div class="bag-dim">Max 14&quot; x 18&quot; x 8&quot;</div>
+          </div>
+          <div class="bag-content">
+            <div class="bag-title-row">
+              <h2 class="bag-title">Free Personal Item</h2>
+              <div class="pill info">1 Included ($0)</div>
+            </div>
+            <p class="bag-copy">A small backpack, purse, or laptop bag that fits under the seat in front of you is
+              included at no extra cost.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card packing-card">
+        <h3>Take care when packing</h3>
+        <div class="hazard-grid">
+          <div class="hazard-item">
+            <div class="hazard-icon">🔥</div>
+            <div class="hazard-text">Fireworks</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🔫</div>
+            <div class="hazard-text">Weapons</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🛢️</div>
+            <div class="hazard-text">Flammables</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🧪</div>
+            <div class="hazard-text">Corrosives</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">⛽</div>
+            <div class="hazard-text">Compressed Gas</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🧴</div>
+            <div class="hazard-text">Household Items</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">🔋</div>
+            <div class="hazard-text">Lithium Batteries</div>
+          </div>
+          <div class="hazard-item">
+            <div class="hazard-icon">⚠️</div>
+            <div class="hazard-text">Others</div>
+          </div>
+        </div>
+        <div class="policy-note">By continuing, I agree to the <a href="#">prohibited hazardous material policy</a>.
+        </div>
+      </section>
+    </main>
+
+    <aside class="summary-column">
+      <div class="summary-card">
+        <div class="summary-head">
+          <div class="summary-eyebrow">Your Trip Summary</div>
+          <div class="summary-total-row">
+            <div class="summary-total-label">Total</div>
+            <div class="summary-total-value" id="summary-total">$363.00</div>
+          </div>
+        </div>
+
+        <div class="summary-body">
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Outbound Flight</div>
+              <div class="summary-value">$142.00</div>
+            </div>
+            <div class="summary-sub">DTW → DEN · Apr 25, 2026</div>
+          </div>
+
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Return Flight</div>
+              <div class="summary-value">$181.00</div>
+            </div>
+            <div class="summary-sub">DEN → DTW · May 03, 2026</div>
+          </div>
+
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Seat Selection</div>
+              <div class="summary-value summary-highlight">$40.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Outbound: 5C (Preferred)</div>
+              <div class="summary-sub">$15.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Return: 3A (Premium)</div>
+              <div class="summary-sub">$25.00</div>
+            </div>
+          </div>
+
+          <div class="summary-group">
+            <div class="summary-row">
+              <div class="summary-label">Bags (Outbound)</div>
+              <div class="summary-value summary-highlight" id="bags-total-line">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">Carry-on: Included</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row">
+              <div class="summary-sub">1st checked: Included</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row" id="extra-bag-row">
+              <div class="summary-sub">2nd checked: Not selected</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+            <div class="summary-sub-row" id="upgrade-row">
+              <div class="summary-sub">Weight upgrade: None</div>
+              <div class="summary-sub">$0.00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-stack">
+          <button class="secondary-btn" id="reset-btn" type="button">Reset Bags</button>
+          <button class="primary-btn" id="continue-btn" type="button">Continue to Return Bags</button>
+        </div>
+
+        <div class="info-box">
+          <h4>Outbound Bags</h4>
+          <ul>
+            <li>Your default total starts at $363.00 based on the confirmed flight and seat selections you carried
+              forward.</li>
+            <li>Any paid outbound bag option is added instantly to the trip summary.</li>
+            <li>Continuing to Return Bags saves this outbound bag total and price description for the next page.</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">FRONTIER</div>
+      <div class="footer-grid">
+        <div class="promo-card">
+          <div class="promo-box">
+            <div class="card-graphic"></div>
+          </div>
+          <div>
+            <div class="promo-copy">Earn 50,000 Miles after qualifying activity. Plus, $0 Intro Annual Fee, then $99.
+            </div>
+            <a class="promo-btn" href="#">Pre Qualify Now</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Get to Know Us</h5>
+          <a href="#">About Us</a>
+          <a href="#">Fly Greener</a>
+          <a href="#">Careers</a>
+          <a href="#">Newsroom</a>
+          <a href="#">Investor Relations</a>
+          <a href="#">Travel Agents</a>
+        </div>
+        <div class="footer-col">
+          <h5>Need Help?</h5>
+          <a href="#">Customer Service</a>
+          <a href="#">Tips and FAQs</a>
+          <a href="#">Legal</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Optional Services</a>
+          <a href="#">Privacy Notice</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect With Us</h5>
+          <a href="#">Email Signup</a>
+          <a href="#">Facebook</a>
+          <a href="#">X</a>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-bottom">America's Greenest Airline</div>
+    </div>
+  </footer>
+
+  <script>
+    const BASE_TOTAL = 363;
+    const SECOND_BAG_PRICE = 55;
+
+    const secondCountEl = document.getElementById('second-count');
+    const minusBtn = document.getElementById('minus-second');
+    const plusBtn = document.getElementById('plus-second');
+    const totalEl = document.getElementById('summary-total');
+    const bagsLineEl = document.getElementById('bags-total-line');
+    const extraBagRow = document.getElementById('extra-bag-row');
+    const upgradeRow = document.getElementById('upgrade-row');
+    const upgradeCards = [...document.querySelectorAll('.upgrade-card')];
+    const applyReturn = document.getElementById('apply-return');
+
+    let secondBagCount = 0;
+    let upgradePrice = 0;
+
+    function money(value) {
+      return `$${value.toFixed(2)}`;
+    }
+
+    function getUpgradeLabel() {
+      if (upgradePrice === 25) return '50 lb upgrade';
+      if (upgradePrice === 45) return 'Overweight option';
+      return 'None';
+    }
+
+    function normalizeUpgradeAvailability() {
+      const disabled = secondBagCount === 0;
+      upgradeCards.forEach(card => {
+        const price = Number(card.dataset.upgrade);
+        if (price !== 0) {
+          card.classList.toggle('upgrade-disabled', disabled);
+        }
+      });
+      if (disabled && upgradePrice !== 0) {
+        upgradePrice = 0;
+        document.querySelector('input[name="upgrade"][value="0"]').checked = true;
+        upgradeCards.forEach(card => card.classList.toggle('active', Number(card.dataset.upgrade) === 0));
+      }
+    }
+
+    function updateSummary() {
+      normalizeUpgradeAvailability();
+      const secondBagTotal = secondBagCount * SECOND_BAG_PRICE;
+      const bagsTotal = secondBagTotal + upgradePrice;
+      const grandTotal = BASE_TOTAL + bagsTotal;
+
+      totalEl.textContent = money(grandTotal);
+      bagsLineEl.textContent = money(bagsTotal);
+      extraBagRow.innerHTML = `<div class="summary-sub">2nd checked: ${secondBagCount === 0 ? 'Not selected' : secondBagCount + ' selected'}</div><div class="summary-sub">${money(secondBagTotal)}</div>`;
+      upgradeRow.innerHTML = `<div class="summary-sub">Weight upgrade: ${getUpgradeLabel()}</div><div class="summary-sub">${money(upgradePrice)}</div>`;
+
+      secondCountEl.textContent = secondBagCount;
+      minusBtn.disabled = secondBagCount === 0;
+
+      const outboundBagState = {
+        baseTotal: BASE_TOTAL,
+        outboundFlight: 142,
+        returnFlight: 181,
+        seatTotal: 40,
+        outboundSeat: '5C (Preferred)',
+        returnSeat: '3A (Premium)',
+        secondBagCount,
+        secondBagUnitPrice: SECOND_BAG_PRICE,
+        secondBagTotal,
+        upgradeLabel: getUpgradeLabel(),
+        upgradePrice,
+        bagsTotal,
+        grandTotal,
+        applyToReturn: applyReturn.checked,
+        carryOnIncluded: true,
+        firstCheckedIncluded: true,
+        summaryDescription: {
+          outbound: 'Carry-on: Included | 1st checked: Included',
+          extra: secondBagCount === 0 ? '2nd checked: Not selected' : `2nd checked: ${secondBagCount} selected`,
+          upgrade: `Weight upgrade: ${getUpgradeLabel()}`
+        }
+      };
+
+      localStorage.setItem('frontierOutboundBags', JSON.stringify(outboundBagState));
+    }
+
+    minusBtn.addEventListener('click', () => {
+      if (secondBagCount > 0) {
+        secondBagCount -= 1;
+        updateSummary();
+      }
+    });
+
+    plusBtn.addEventListener('click', () => {
+      if (secondBagCount < 2) {
+        secondBagCount += 1;
+        updateSummary();
+      }
+    });
+
+    upgradeCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const selected = Number(card.dataset.upgrade);
+        if (selected !== 0 && secondBagCount === 0) return;
+        upgradePrice = selected;
+        upgradeCards.forEach(item => item.classList.toggle('active', item === card));
+        const input = card.querySelector('input');
+        if (input) input.checked = true;
+        updateSummary();
+      });
+    });
+
+    applyReturn.addEventListener('change', updateSummary);
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      secondBagCount = 0;
+      upgradePrice = 0;
+      applyReturn.checked = true;
+      upgradeCards.forEach(card => card.classList.toggle('active', Number(card.dataset.upgrade) === 0));
+      document.querySelector('input[name="upgrade"][value="0"]').checked = true;
+      updateSummary();
+    });
+
+    document.getElementById('continue-btn').addEventListener('click', () => {
+      updateSummary();
+      window.location.href = 'Return Bag.html';
+    });
+
+    updateSummary();
+  </script>
+</body>
+
+</html>

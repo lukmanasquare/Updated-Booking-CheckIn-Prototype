@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Booking Confirmation | Frontier</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .font-frontier {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-style: italic;
+    }
+
+    .font-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .font-body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .itinerary-line {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      min-width: 180px;
+    }
+
+    .itinerary-line::before,
+    .itinerary-line::after {
+      content: "";
+      flex: 1;
+      height: 3px;
+      background: #cfd8df;
+      border-radius: 999px;
+    }
+
+    .itinerary-plane {
+      color: #006643;
+      font-size: 22px;
+      line-height: 1;
+      transform: translateY(1px);
+    }
+
+    .itinerary-duration {
+      text-align: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .bookinghome-header-font {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .bookinghome-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .bookinghome-toplink {
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .bookinghome-alerttext {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #fff;
+    }
+
+    .bookinghome-price-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #fff;
+    }
+
+    .bookinghome-backtext {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #006643;
+    }
+
+    .bookinghome-backtext:hover {
+      color: brown;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            frontiergreen: '#006643',
+            frontierdark: '#004833',
+            frontierteal: '#00cf91',
+            pagebg: '#eef2f4'
+          },
+          fontFamily: {
+            headline: ['Plus Jakarta Sans', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="bg-pagebg font-body text-slate-900">
+
+  <header class="fixed top-0 w-full z-50 bookinghome-header-font">
+    <div class="bg-frontierdark text-white">
+      <div class="max-w-[1280px] mx-auto px-4 h-16 flex items-center justify-between relative">
+        <div class="bookinghome-brand">FRONTIER</div>
+
+        <nav class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-10">
+          <a href="#" class="bookinghome-toplink">My Trips &amp; Travel Info</a>
+          <a href="#" class="bookinghome-toplink">Deals</a>
+          <a href="#" class="bookinghome-toplink"><em>FRONTIER Miles</em></a>
+        </nav>
+
+        <div class="flex items-center gap-[14px]">
+          <a href="#" class="bookinghome-toplink">Hi, log in | sign up</a>
+          <span class="w-px h-[14px] bg-white/30"></span>
+          <a href="#" class="bookinghome-toplink">Español</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-frontierteal text-white">
+      <div class="max-w-[1280px] mx-auto px-4 py-2 flex justify-between items-center">
+        <span class="bookinghome-alerttext">Travel Alert</span>
+        <div class="bg-black/10 px-3 py-2 rounded bookinghome-alerttext">Sign up for our latest deals!</div>
+      </div>
+    </div>
+
+    <div class="bg-white border-b border-slate-200">
+      <div class="max-w-[1280px] mx-auto px-4 py-3">
+        <a class="inline-flex items-center gap-2 no-underline" href="index.html">
+          <span class="bookinghome-backtext"> ← Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <main class="pt-44 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
+    <section class="flex flex-col items-center text-center mb-14">
+      <div
+        class="mb-6 h-20 w-20 bg-frontiergreen rounded-full flex items-center justify-center shadow-lg shadow-emerald-900/10">
+        <span class="material-symbols-outlined text-white text-5xl"
+          style="font-variation-settings: 'wght' 700;">check_circle</span>
+      </div>
+      <h1 class="font-headline text-5xl md:text-6xl font-extrabold text-frontiergreen tracking-tight mb-4">You’re all
+        set!</h1>
+      <p class="text-slate-600 text-lg max-w-2xl mb-8 leading-relaxed">
+        Your flight to <span class="font-bold text-slate-900">Denver, Colorado</span> has been successfully booked.
+        A confirmation has been sent to your registered email address.
+      </p>
+      <div class="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full mb-10 border border-slate-200">
+        <span class="text-sm font-body font-medium uppercase tracking-widest text-slate-500">Booking Reference</span>
+        <span class="text-xl font-headline font-extrabold text-frontiergreen">CE2158F</span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4">
+        <button
+          class="bg-gradient-to-br from-frontiergreen to-emerald-700 text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 shadow-xl shadow-emerald-900/20 hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined">download</span>
+          Download Receipt
+        </button>
+        <button
+          class="bg-white text-frontiergreen px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-slate-50 transition-colors border border-slate-200">
+          <span class="material-symbols-outlined">mail</span>
+          Email Itinerary
+        </button>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-8 space-y-8">
+        <div class="bg-white rounded-xl p-8 shadow-sm">
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-4">
+              <span class="material-symbols-outlined text-frontiergreen text-3xl">flight_takeoff</span>
+              <h2 class="font-headline text-2xl font-bold text-slate-900">Flight Itinerary</h2>
+            </div>
+            <span class="bg-emerald-100 text-frontiergreen px-4 py-1.5 rounded-full text-sm font-bold">Confirmed</span>
+          </div>
+
+          <div class="space-y-6">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="text-xs font-black uppercase tracking-widest bg-emerald-50 text-frontiergreen px-3 py-1 rounded">Outbound</span>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex-1 text-center md:text-left">
+                <div class="text-4xl font-headline font-extrabold text-frontiergreen mb-1">DTW</div>
+                <div class="text-sm font-medium text-slate-500">Detroit Metro</div>
+                <div class="text-xl font-bold mt-2">8:45 AM</div>
+                <div class="text-sm text-slate-500">Apr 25, 2026</div>
+              </div>
+              <div class="flex-shrink-0 min-w-[210px]">
+                <div class="itinerary-duration">3H 22M (NONSTOP)</div>
+                <div class="itinerary-line"><span class="itinerary-plane">✈</span></div>
+              </div>
+              <div class="flex-1 text-center md:text-right">
+                <div class="text-4xl font-headline font-extrabold text-frontiergreen mb-1">DEN</div>
+                <div class="text-sm font-medium text-slate-500">Denver Intl</div>
+                <div class="text-xl font-bold mt-2">10:07 AM</div>
+                <div class="text-sm text-slate-500">Apr 25, 2026</div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-8 justify-between pt-4">
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Flight Number</p>
+                <p class="text-base font-bold text-slate-900">F9 #123</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Cabin Class</p>
+                <p class="text-base font-bold text-slate-900">Premium</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Aircraft</p>
+                <p class="text-base font-bold text-slate-900">Airbus A321neo</p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-10 border-slate-200" />
+
+          <div class="space-y-6">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="text-xs font-black uppercase tracking-widest bg-cyan-50 text-cyan-700 px-3 py-1 rounded">Return</span>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex-1 text-center md:text-left">
+                <div class="text-4xl font-headline font-extrabold text-frontiergreen mb-1">DEN</div>
+                <div class="text-sm font-medium text-slate-500">Denver Intl</div>
+                <div class="text-xl font-bold mt-2">3:15 PM</div>
+                <div class="text-sm text-slate-500">May 03, 2026</div>
+              </div>
+              <div class="flex-shrink-0 min-w-[210px]">
+                <div class="itinerary-duration">3H 15M (NONSTOP)</div>
+                <div class="itinerary-line"><span class="itinerary-plane">✈</span></div>
+              </div>
+              <div class="flex-1 text-center md:text-right">
+                <div class="text-4xl font-headline font-extrabold text-frontiergreen mb-1">DTW</div>
+                <div class="text-sm font-medium text-slate-500">Detroit Metro</div>
+                <div class="text-xl font-bold mt-2">6:30 PM</div>
+                <div class="text-sm text-slate-500">May 03, 2026</div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-8 justify-between pt-4">
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Flight Number</p>
+                <p class="text-base font-bold text-slate-900">F9 #456</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Cabin Class</p>
+                <p class="text-base font-bold text-slate-900">Premium</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">Aircraft</p>
+                <p class="text-base font-bold text-slate-900">Airbus A321neo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-sm">
+          <h3 class="font-headline text-xl font-bold mb-8 flex items-center gap-3">
+            <span class="material-symbols-outlined text-frontiergreen">person</span>
+            Passenger Details
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Primary Passenger</p>
+              <p class="text-lg font-bold text-slate-900">John Kelly</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Ticket Number</p>
+              <p class="text-lg font-bold text-slate-900">1234567890</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Booking Ref</p>
+              <p class="text-lg font-bold text-frontiergreen">CE2158F</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+          <div class="p-8 border-b border-slate-200">
+            <h3 class="font-headline text-xl font-bold flex items-center gap-3">
+              <span class="material-symbols-outlined text-frontiergreen">description</span>
+              Flight Details Table
+            </h3>
+          </div>
+
+          <div
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-x divide-y md:divide-y-0 divide-slate-200 border-b border-slate-200">
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Flight</p>
+              <p class="font-bold">F9 123</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Departure</p>
+              <p class="font-bold">8:45 AM</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Arrival</p>
+              <p class="font-bold">10:07 AM</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Airport</p>
+              <p class="font-bold">DTW → DEN</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Seat</p>
+              <p class="font-bold text-cyan-700">5C</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Cabin</p>
+              <p class="font-bold">Premium</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-x divide-y md:divide-y-0 divide-slate-200">
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Flight</p>
+              <p class="font-bold">F9 456</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Departure</p>
+              <p class="font-bold">3:15 PM</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Arrival</p>
+              <p class="font-bold">6:30 PM</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Airport</p>
+              <p class="font-bold">DEN → DTW</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Seat</p>
+              <p class="font-bold text-cyan-700">3A</p>
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold text-slate-500 uppercase mb-2">Cabin</p>
+              <p class="font-bold">Premium</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-4 space-y-8">
+        <div
+          class="bg-frontiergreen text-white rounded-xl p-8 shadow-2xl shadow-emerald-900/20 relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
+          <h3 class="bookinghome-price-title mb-8 flex items-center gap-3">
+            <span class="material-symbols-outlined">payments</span>
+            Price Summary
+          </h3>
+
+          <div class="space-y-5 mb-8">
+            <div class="flex justify-between items-start gap-4">
+              <div>
+                <div class="text-white font-extrabold uppercase text-xs tracking-widest">Outbound Flight</div>
+                <div class="text-white/80 text-sm font-semibold">DTW → DEN · Apr 25, 2026</div>
+              </div>
+              <div class="font-bold">$142.00</div>
+            </div>
+
+            <div class="flex justify-between items-start gap-4">
+              <div>
+                <div class="text-white font-extrabold uppercase text-xs tracking-widest">Return Flight</div>
+                <div class="text-white/80 text-sm font-semibold">DEN → DTW · May 03, 2026</div>
+              </div>
+              <div class="font-bold">$181.00</div>
+            </div>
+
+            <div class="flex justify-between items-start gap-4">
+              <div>
+                <div class="text-white font-extrabold uppercase text-xs tracking-widest">Seat Selection</div>
+                <div class="text-white/80 text-sm font-semibold">Outbound: 5C / Return: 3A</div>
+              </div>
+              <div class="font-bold">$40.00</div>
+            </div>
+
+            <div class="flex justify-between items-start gap-4">
+              <div>
+                <div class="text-white font-extrabold uppercase text-xs tracking-widest">Bags</div>
+                <div class="text-white/80 text-sm font-semibold">Outbound: $55.00 / Return: $55.00</div>
+              </div>
+              <div class="font-bold">$110.00</div>
+            </div>
+
+            <div class="flex justify-between items-start gap-4">
+              <div>
+                <div class="text-white font-extrabold uppercase text-xs tracking-widest">Add-ons</div>
+                <div class="text-white/80 text-sm font-semibold leading-6">
+                  Board First™ Outbound: Selected<br>
+                  Board First™ Return: Selected<br>
+                  Airport service Outbound: Agent Assistance<br>
+                  Airport service Return: Agent Assistance<br>
+                  Rental car Outbound: Not selected<br>
+                  Rental car Return: Not selected
+                </div>
+              </div>
+              <div class="font-bold">$80.00</div>
+            </div>
+
+            <div class="flex justify-between items-start gap-4">
+              <div>
+                <div class="text-white font-extrabold uppercase text-xs tracking-widest">Trip Protection</div>
+                <div class="text-white/80 text-sm font-semibold">Yes, protect my trip</div>
+              </div>
+              <div class="font-bold">$24.95</div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-white/10 flex justify-between items-end">
+            <div>
+              <p class="text-xs uppercase font-bold text-white/60 tracking-widest mb-1">Total Amount</p>
+              <p class="text-4xl font-headline font-extrabold">$577.95</p>
+            </div>
+            <span class="material-symbols-outlined text-white/20 text-6xl"
+              style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 space-y-4 border border-slate-200">
+          <h4 class="font-headline font-bold text-slate-900 mb-4">Manage Reservation</h4>
+          <button
+            class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-white transition-all group shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-frontiergreen">picture_as_pdf</span>
+              <span class="font-bold text-slate-900">Download PDF</span>
+            </div>
+            <span
+              class="material-symbols-outlined text-slate-500 group-hover:translate-x-1 transition-transform">chevron_right</span>
+          </button>
+          <button
+            class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-white transition-all group shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-frontiergreen">print</span>
+              <span class="font-bold text-slate-900">Print receipt</span>
+            </div>
+            <span
+              class="material-symbols-outlined text-slate-500 group-hover:translate-x-1 transition-transform">chevron_right</span>
+          </button>
+          <button
+            class="w-full flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-white transition-all group shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-frontiergreen">calendar_add_on</span>
+              <span class="font-bold text-slate-900">Add to calendar</span>
+            </div>
+            <span
+              class="material-symbols-outlined text-slate-500 group-hover:translate-x-1 transition-transform">chevron_right</span>
+          </button>
+        </div>
+
+        <div class="bg-emerald-50 rounded-xl p-6 flex items-start gap-4 border border-emerald-100">
+          <span class="material-symbols-outlined text-frontiergreen">info</span>
+          <div>
+            <p class="text-sm font-bold text-frontiergreen uppercase tracking-tight mb-1">Check-in Reminder</p>
+            <p class="text-sm text-slate-600 leading-tight">Mobile check-in opens 24 hours before your flight departure.
+            </p>
+            <button
+              class="bg-white text-frontiergreen px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-frontiergreen hover:text-white transition-all border border-slate-200 mt-6"
+              onclick="window.location.href='https://frontierair-mabemkej.manus.space/'">
+              PROCEED TO CHECK-IN
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="w-full pt-20 pb-10 bg-[#667885] text-white font-body text-sm">
+    <div class="max-w-7xl mx-auto px-8 flex flex-col items-center gap-8">
+      <div class="text-center">
+        <p class="text-lg font-bold text-white mb-2">Thank you for flying with us</p>
+        <p class="text-white/70">You will receive an email 24 hours before departure.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-8">
+        <a class="text-white/75 hover:text-white transition-colors" href="#">Privacy Policy</a>
+        <a class="text-white/75 hover:text-white transition-colors" href="#">Terms of Service</a>
+        <a class="text-white/75 hover:text-white transition-colors" href="#">Contact Us</a>
+        <a class="text-white/75 hover:text-white transition-colors" href="#">Support</a>
+      </div>
+      <p class="text-white/70 pt-8 border-t border-white/20 w-full text-center">
+        © 2026 Frontier Airlines, Inc. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontier Airlines - Payment Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --green-main: #006643;
+      --green-dark: #004833;
+      --teal-bar: #059784;
+      --page-bg: #eef2f4;
+      --text-dark: #1f2937;
+      --muted: #6b7280;
+      --border: #d9dee3;
+      --white: #ffffff;
+      --nav-muted: rgba(255, 255, 255, 0.46);
+      --nav-line: rgba(255, 255, 255, 0.22);
+      --card: #ffffff;
+      --soft: #f8fafb;
+      --included: #e8f4ef;
+      --danger: #b42318;
+      --sticky-top: 80px;
+      --sticky-bottom-space: 280px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--page-bg);
+      color: var(--text-dark)
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit
+    }
+
+    .site-header {
+      background: var(--green-main);
+      color: #fff;
+      border-bottom: 3px solid #0bb39a
+    }
+
+    .site-header-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 22px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      align-items: center;
+      gap: 16px
+    }
+
+    .brand {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 1
+    }
+
+    .progress-nav-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .progress-nav {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 34px;
+      min-width: 620px;
+      padding-top: 6px;
+      padding-bottom: 22px
+    }
+
+    .progress-line {
+      position: absolute;
+      left: 36px;
+      right: 36px;
+      bottom: 8px;
+      height: 4px;
+      background: var(--nav-line);
+      border-radius: 999px;
+      overflow: hidden
+    }
+
+    .progress-line-fill {
+      height: 100%;
+      width: 90%;
+      background: #fff;
+      border-radius: 999px
+    }
+
+    .progress-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 72px;
+      background: none;
+      border: none;
+      color: var(--nav-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0
+    }
+
+    .progress-step.done,
+    .progress-step.active {
+      color: #fff
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2
+    }
+
+    .progress-step.done .progress-dot,
+    .progress-step.active .progress-dot {
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12)
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px
+    }
+
+    .top-right a {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap
+    }
+
+    .top-right .sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.28)
+    }
+
+    .back-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .back-inner {
+      padding: 16px 22px;
+      display: flex;
+      align-items: center
+    }
+
+    .back-link {
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      letter-spacing: 0.03em;
+    }
+
+    .back-link:hover {
+      color: brown;
+    }
+
+    .page-shell {
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 28px 22px var(--sticky-bottom-space);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .left-column {
+      min-width: 0;
+    }
+
+    .right-column {
+      min-width: 0;
+      background: #fff;
+      border-left: 2px solid var(--border);
+      border-right: 2px solid var(--border);
+      border-top: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: var(--sticky-top);
+      align-self: start;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px
+    }
+
+    .hero-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4efe7, #f4faf8);
+      border: 4px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--green-main);
+      letter-spacing: -0.03em;
+      text-transform: uppercase
+    }
+
+    .trip-headline {
+      font-size: 30px;
+      font-weight: 900;
+      color: #173129;
+      letter-spacing: -0.03em;
+      margin: 26px 0 14px
+    }
+
+    .trip-card {
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 22px 18px 26px;
+      display: grid;
+      grid-template-columns: 130px 1.2fr 1fr 1.25fr 1fr 24px;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      overflow: hidden
+    }
+
+    .trip-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      background: var(--green-main);
+      border-radius: 14px 0 0 14px;
+    }
+
+    .trip-left-label {
+      font-size: 11px;
+      font-weight: 900;
+      color: #94a3b8;
+      text-transform: uppercase;
+      line-height: 1.35
+    }
+
+    .change-link {
+      display: block;
+      color: var(--green-main);
+      font-size: 11px;
+      font-weight: 900;
+      margin-top: 4px
+    }
+
+    .trip-route {
+      font-size: 28px;
+      font-weight: 900;
+      color: #173129;
+      white-space: nowrap
+    }
+
+    .trip-date,
+    .trip-time {
+      font-size: 22px;
+      font-weight: 800;
+      color: #173129;
+      white-space: nowrap
+    }
+
+    .trip-meta {
+      justify-self: end;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      color: #667085;
+      line-height: 1.4;
+      white-space: nowrap
+    }
+
+    .trip-meta strong {
+      display: block;
+      color: #111827;
+      font-size: 12px
+    }
+
+    .trip-chevron {
+      color: #e11d48;
+      font-size: 22px;
+      font-weight: 900;
+      text-align: right
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03)
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px
+    }
+
+    .card-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--green-main);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900
+    }
+
+    .card-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #173129;
+      letter-spacing: -0.03em;
+      text-transform: uppercase
+    }
+
+    .grid-6 {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .field.col-2 {
+      grid-column: span 2
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 900;
+      color: #7b8798;
+      text-transform: uppercase;
+      letter-spacing: 0.04em
+    }
+
+    .input,
+    .select {
+      width: 100%;
+      height: 42px;
+      border: 1px solid #d8dee5;
+      border-radius: 8px;
+      background: #fff;
+      padding: 0 12px;
+      font-size: 14px;
+      color: #111827
+    }
+
+    .input::placeholder {
+      color: #a1a9b5
+    }
+
+    .error {
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--danger);
+      display: none
+    }
+
+    .field.invalid .input,
+    .field.invalid .select {
+      border-color: var(--danger);
+      background: #fff7f7
+    }
+
+    .field.invalid .error {
+      display: block
+    }
+
+    details.extra[open] summary .caret {
+      transform: rotate(180deg)
+    }
+
+    details.extra summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--green-main);
+      font-size: 14px;
+      font-weight: 800;
+      padding: 4px 0
+    }
+
+    details.extra summary::-webkit-details-marker {
+      display: none
+    }
+
+    .caret {
+      transition: transform .2s ease
+    }
+
+    .extra-content {
+      padding-top: 12px;
+      border-top: 1px solid #edf1f4;
+      margin-top: 12px
+    }
+
+    .inline-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #173129
+    }
+
+    .inline-check input {
+      accent-color: var(--green-main)
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px
+    }
+
+    .pay-option {
+      border: 1px solid #d8dee5;
+      border-radius: 10px;
+      height: 86px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 900;
+      color: #7b8798;
+      text-transform: uppercase
+    }
+
+    .pay-option.active {
+      border: 2px solid var(--green-main);
+      background: #f3fbf7;
+      color: var(--green-main)
+    }
+
+    .pay-icon {
+      font-size: 25px;
+      margin-bottom: 6px
+    }
+
+    .address-same {
+      margin-bottom: 14px
+    }
+
+    .protection-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border: 1px solid #d8dee5;
+      border-radius: 10px;
+      padding: 14px 14px;
+      background: #fff;
+      cursor: pointer
+    }
+
+    .protection-option.active {
+      border-color: var(--green-main);
+      background: #f3fbf7
+    }
+
+    .protection-radio {
+      margin-top: 4px;
+      accent-color: var(--green-main)
+    }
+
+    .protection-copy {
+      flex: 1
+    }
+
+    .protection-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 8px
+    }
+
+    .protection-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: #173129;
+      text-transform: uppercase
+    }
+
+    .recommended {
+      background: var(--green-main);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 900;
+      padding: 4px 8px;
+      border-radius: 999px
+    }
+
+    .protection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #6b7280;
+      text-transform: uppercase
+    }
+
+    .protection-grid span {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .trip-protection-stack {
+      display: grid;
+      gap: 10px
+    }
+
+    .summary-panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
+      overflow: hidden;
+      position: sticky;
+      top: var(--sticky-top);
+    }
+
+    .summary-top {
+      padding: 18px 16px;
+      border-bottom: 1px solid #e6ebf0
+    }
+
+    .summary-eyebrow {
+      font-size: 12px;
+      font-weight: 900;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px
+    }
+
+    .summary-total-line {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between
+    }
+
+    .summary-total-label {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--green-main)
+    }
+
+    .summary-total {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green-main);
+      letter-spacing: -0.03em
+    }
+
+    .summary-body {
+      padding: 18px 16px
+    }
+
+    .summary-item {
+      padding: 0 0 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #edf1f4
+    }
+
+    .summary-item:last-of-type {
+      margin-bottom: 0
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 4px
+    }
+
+    .summary-label {
+      font-size: 12px;
+      font-weight: 900;
+      color: #111827;
+      text-transform: uppercase
+    }
+
+    .summary-value {
+      font-size: 12px;
+      font-weight: 900;
+      color: #111827;
+      white-space: nowrap
+    }
+
+    .summary-sub {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 700;
+      line-height: 1.5
+    }
+
+    .summary-sub-compact {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
+    .purchase-btn {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: var(--green-main);
+      color: #fff;
+      height: 56px;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 102, 67, 0.2);
+      transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    }
+
+    .purchase-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .purchase-btn:active {
+      background: #003524;
+      transform: scale(0.98);
+      box-shadow: 0 4px 10px rgba(0, 102, 67, 0.18);
+    }
+
+    .secure-line {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em
+    }
+
+    .summary-footer-links {
+      padding-top: 12px;
+      border-top: 1px solid #edf1f4;
+      display: grid;
+      gap: 10px
+    }
+
+    .summary-foot-link {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green-main);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .summary-foot-link.gray {
+      color: #98a2b3
+    }
+
+    footer {
+      background: #667885;
+      color: #fff;
+      margin-top: 0;
+      padding: 40px 0 26px
+    }
+
+    .footer-inner {
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 0 22px
+    }
+
+    .footer-brand {
+      font-size: 48px;
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 26px
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr 1fr 1fr;
+      gap: 34px;
+      align-items: start
+    }
+
+    .promo-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start
+    }
+
+    .promo-box {
+      width: 170px;
+      height: 170px;
+      background: #fff;
+      border-radius: 4px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end
+    }
+
+    .card-graphic {
+      width: 100%;
+      height: 72px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0c6d3e, #0a3d2f)
+    }
+
+    .promo-copy {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45
+    }
+
+    .promo-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: #007a4d;
+      color: #fff;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.25)
+    }
+
+    .footer-col h5 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #fff
+    }
+
+    .footer-col a {
+      display: block;
+      color: #e8eef2;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 2
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      font-size: 11px;
+      color: #d8e0e5;
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
+    @media (max-width: 1180px) {
+      .site-header-inner {
+        grid-template-columns: 180px 1fr 220px
+      }
+
+      .progress-nav {
+        min-width: 520px;
+        gap: 24px
+      }
+
+      .page-shell {
+        grid-template-columns: 1fr
+      }
+
+      .right-column {
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .right-column {
+        position: static;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .trip-card {
+        grid-template-columns: 1fr;
+        gap: 8px
+      }
+
+      .trip-meta {
+        justify-self: start;
+        white-space: normal
+      }
+
+      .trip-chevron {
+        text-align: left
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site-header-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        height: auto;
+        padding-top: 18px;
+        padding-bottom: 18px
+      }
+
+      .top-right {
+        display: none
+      }
+
+      .progress-nav {
+        min-width: 100%;
+        gap: 18px
+      }
+
+      .grid-6,
+      .grid-2,
+      .grid-3,
+      .payment-methods,
+      .protection-grid {
+        grid-template-columns: 1fr
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr
+      }
+
+      .trip-route,
+      .trip-date,
+      .trip-time {
+        font-size: 22px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">FRONTIER</div>
+      <div class="progress-nav-wrap">
+        <div class="progress-nav">
+          <div class="progress-line">
+            <div class="progress-line-fill"></div>
+          </div>
+          <div class="progress-step done"><span>Flight</span><span class="progress-dot"></span></div>
+          <div class="progress-step done"><span>Seats</span><span class="progress-dot"></span></div>
+          <div class="progress-step done"><span>Bags</span><span class="progress-dot"></span></div>
+          <div class="progress-step done"><span>Add-ons</span><span class="progress-dot"></span></div>
+          <div class="progress-step active"><span>Payment</span><span class="progress-dot"></span></div>
+        </div>
+      </div>
+      <div class="top-right">
+        <a href="#">Hi, log in</a><span class="sep"></span><a href="#">sign up</a><span class="sep"></span><a
+          href="#">Español</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="back-bar">
+    <div class="back-inner">
+      <a class="back-link" href="Add-on Booking.html">← Back to Add-ons</a>
+    </div>
+  </div>
+
+  <main class="page-shell">
+    <div class="left-column">
+      <div class="hero">
+        <div class="hero-icon">🍃</div>
+        <h1 class="section-title">LAST STEP, LET'S FLY</h1>
+      </div>
+
+      <h2 class="trip-headline">Flight Summary</h2>
+
+      <div class="trip-card">
+        <div>
+          <div class="trip-left-label">Outbound</div>
+          <a href="#" class="change-link">Change Flight</a>
+        </div>
+        <div class="trip-route">DTW→DEN</div>
+        <div class="trip-date">Sat, Apr 25</div>
+        <div class="trip-time">8:45am - 10:07am</div>
+        <div class="trip-meta">
+          <div>Nonstop, 3h 22m</div><strong>Premium Bundle</strong>
+        </div>
+        <div class="trip-chevron">⌄</div>
+      </div>
+
+      <div class="trip-card">
+        <div>
+          <div class="trip-left-label">Return</div>
+          <a href="#" class="change-link">Change Flight</a>
+        </div>
+        <div class="trip-route">DEN→DTW</div>
+        <div class="trip-date">Sun, May 03</div>
+        <div class="trip-time">3:15pm - 6:30pm</div>
+        <div class="trip-meta">
+          <div>Nonstop, 3h 15m</div><strong>Premium Bundle</strong>
+        </div>
+        <div class="trip-chevron">⌄</div>
+      </div>
+
+      <form id="paymentForm" novalidate>
+        <section class="card">
+          <div class="card-header">
+            <div class="card-num">1</div>
+            <div class="card-title">Passengers</div>
+          </div>
+          <div class="grid-6">
+            <div class="field col-2" id="first_name_field">
+              <label class="label">First Name</label>
+              <input class="input" id="first_name" type="text" placeholder="e.g. John" />
+              <div class="error"></div>
+            </div>
+            <div class="field col-2">
+              <label class="label">Middle Name</label>
+              <input class="input" id="middle_name" type="text" placeholder="Optional" />
+            </div>
+            <div class="field col-2" id="last_name_field">
+              <label class="label">Last Name</label>
+              <input class="input" id="last_name" type="text" placeholder="e.g. Doe" />
+              <div class="error"></div>
+            </div>
+            <div class="field col-2">
+              <label class="label">Gender</label>
+              <select class="select" id="gender">
+                <option>Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field col-2">
+              <label class="label">Date of Birth</label>
+              <input class="input" id="dob" type="date" />
+            </div>
+            <div class="field col-2">
+              <label class="label">Suffix</label>
+              <select class="select" id="suffix">
+                <option>None</option>
+                <option>Jr.</option>
+                <option>Sr.</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-num">2</div>
+            <div class="card-title">Contact Information</div>
+          </div>
+          <div class="grid-2">
+            <div class="field" id="email_field">
+              <label class="label">Email Address</label>
+              <input class="input" id="email" type="email" placeholder="email@example.com" />
+              <div class="error"></div>
+            </div>
+            <div class="field" id="phone_field">
+              <label class="label">Mobile Number</label>
+              <input class="input" id="phone" type="tel" placeholder="999-999-9999" maxlength="12" />
+              <div class="error"></div>
+            </div>
+            <div class="field" id="zip_field">
+              <label class="label">Zip / Postal Code</label>
+              <input class="input" id="zip" type="text" placeholder="12345" maxlength="5" />
+              <div class="error"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-num">3</div>
+            <div class="card-title">Secure Flight &amp; Additional Details</div>
+          </div>
+          <details class="extra">
+            <summary>
+              <span>Add TSA PreCheck®, Redress #, or Cabin Pet</span>
+              <span class="caret">⌄</span>
+            </summary>
+            <div class="extra-content">
+              <div class="grid-3">
+                <div class="field">
+                  <label class="label">TSA PreCheck®</label>
+                  <input class="input" type="text" />
+                </div>
+                <div class="field">
+                  <label class="label">Redress Number</label>
+                  <input class="input" type="text" />
+                </div>
+                <div class="field" style="justify-content:flex-end">
+                  <label class="inline-check"><input type="checkbox" /> <span>Traveling with Cabin Pet</span></label>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-num">4</div>
+            <div class="card-title">Payment Method</div>
+          </div>
+
+          <div class="payment-methods">
+            <label class="pay-option active" data-pay="card">
+              <span class="pay-icon">💳</span>
+              <span>Credit/Debit</span>
+              <input type="radio" checked name="pay" value="card" hidden />
+            </label>
+
+            <label class="pay-option" data-pay="apple">
+              <span class="pay-icon">📱</span>
+              <span>Apple Pay</span>
+              <input type="radio" name="pay" value="apple" hidden />
+            </label>
+
+            <label class="pay-option" data-pay="paypal">
+              <span class="pay-icon">💵</span>
+              <span>PayPal</span>
+              <input type="radio" name="pay" value="paypal" hidden />
+            </label>
+          </div>
+
+          <div class="grid-2">
+            <div class="field" id="cardholder_name_field" style="grid-column:1 / -1">
+              <label class="label">Cardholder Name</label>
+              <input class="input" id="cardholder_name" type="text" placeholder="Name as it appears on card" />
+              <div class="error"></div>
+            </div>
+
+            <div class="field" id="card_number_field" style="grid-column:1 / -1">
+              <label class="label">Card Number</label>
+              <input class="input" id="card_number" type="text" placeholder="0000 0000 0000 0000" maxlength="19" />
+              <div class="error"></div>
+            </div>
+
+            <div class="field" id="expiry_field">
+              <label class="label">Expiration (MM/YY)</label>
+              <input class="input" id="expiry" type="text" placeholder="MM/YY" maxlength="5" />
+              <div class="error"></div>
+            </div>
+
+            <div class="field" id="cvv_field">
+              <label class="label">CVV / Security Code</label>
+              <input class="input" id="cvv" type="text" placeholder="123" maxlength="4" />
+              <div class="error"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-num">5</div>
+            <div class="card-title">Billing Address</div>
+          </div>
+          <div class="address-same">
+            <label class="inline-check"><input type="checkbox" checked /> <span>Billing Address same as Contact
+                Info</span></label>
+          </div>
+          <div class="grid-3">
+            <div class="field" style="grid-column:1 / -1">
+              <label class="label">Street Address</label>
+              <input class="input" type="text" />
+            </div>
+            <div class="field">
+              <label class="label">City</label>
+              <input class="input" type="text" />
+            </div>
+            <div class="field">
+              <label class="label">State</label>
+              <select class="select">
+                <option>Select</option>
+                <option>MI</option>
+                <option>CO</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label">Zip Code</label>
+              <input class="input" type="text" />
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-num">6</div>
+            <div class="card-title">Trip Protection</div>
+          </div>
+
+          <div class="trip-protection-stack">
+            <label class="protection-option" id="protect_yes_option">
+              <input class="protection-radio" type="radio" name="trip_protection" value="yes" />
+              <div class="protection-copy">
+                <div class="protection-top">
+                  <span class="protection-title">Yes, protect my trip ($24.95)</span>
+                  <span class="recommended">Recommended</span>
+                </div>
+                <div class="protection-grid">
+                  <span>✈ Cancellation</span>
+                  <span>🏥 Medical</span>
+                  <span>🧳 Baggage</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="protection-option" id="protect_no_option">
+              <input class="protection-radio" type="radio" name="trip_protection" value="yes" />
+              <div class="protection-copy">
+                <div class="protection-title" style="color:#667085">No thanks, I'll take the risk</div>
+              </div>
+            </label>
+          </div>
+        </section>
+      </form>
+    </div>
+
+    <aside class="right-column">
+      <div class="summary-panel">
+        <div class="summary-top">
+          <div class="summary-eyebrow">Your Trip Summary</div>
+          <div class="summary-total-line">
+            <span class="summary-total-label">Total:</span>
+            <span class="summary-total" id="grand_total">$553.00</span>
+          </div>
+        </div>
+        <div class="summary-body">
+          <div class="summary-item">
+            <div class="summary-row"><span class="summary-label">Outbound Flight</span><span
+                class="summary-value">$142.00</span></div>
+            <div class="summary-sub-compact">DTW → DEN · Apr 25, 2026</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-row"><span class="summary-label">Return Flight</span><span
+                class="summary-value">$181.00</span></div>
+            <div class="summary-sub-compact">DEN → DTW · May 03, 2026</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-row"><span class="summary-label">Seat Selection</span><span
+                class="summary-value">$40.00</span></div>
+            <div class="summary-sub-compact">Outbound: 5C / Return: 3A</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-row"><span class="summary-label">Bags</span><span class="summary-value">$110.00</span>
+            </div>
+            <div class="summary-sub-compact">Outbound: $55.00 / Return: $55.00</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-row"><span class="summary-label">Add-ons</span><span class="summary-value"
+                id="addons_total">$80.00</span></div>
+            <div class="summary-sub" id="addons_desc">Board First™ Outbound: Selected<br>Board First™ Return:
+              Selected<br>Airport service Outbound: Agent Assistance<br>Airport service Return: Agent
+              Assistance<br>Rental car Outbound: Not selected<br>Rental car Return: Not selected</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-row"><span class="summary-label">Trip Protection</span><span class="summary-value"
+                id="protection_total">$0.00</span></div>
+            <div class="summary-sub" id="protection_desc">Not Selected</div>
+          </div>
+          <div class="summary-item" style="border-bottom:none;padding-bottom:0">
+            <button class="purchase-btn" id="completePurchase" type="button">Complete Purchase</button>
+            <div class="secure-line">Secure Checkout &amp; SSL Encrypted</div>
+            <div class="summary-footer-links">
+              <a class="summary-foot-link" href="#"><span>🛡</span><span>24-Hour Risk-Free Cancellation</span></a>
+              <a class="summary-foot-link gray" href="#"><span>📄</span><span>Terms &amp; Conditions</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">FRONTIER</div>
+      <div class="footer-grid">
+        <div class="promo-card">
+          <div class="promo-box">
+            <div class="card-graphic"></div>
+          </div>
+          <div>
+            <div class="promo-copy">Earn 50,000 Miles after qualifying activity. Plus, $0 Intro Annual Fee, then $99.
+            </div>
+            <a class="promo-btn" href="#">Pre Qualify Now</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Get to Know Us</h5><a href="#">About Us</a><a href="#">Fly Greener</a><a href="#">Careers</a><a
+            href="#">Newsroom</a><a href="#">Investor Relations</a><a href="#">Travel Agents</a>
+        </div>
+        <div class="footer-col">
+          <h5>Need Help?</h5><a href="#">Customer Service</a><a href="#">Tips and FAQs</a><a href="#">Legal</a><a
+            href="#">Accessibility</a><a href="#">Optional Services</a><a href="#">Privacy Notice</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect With Us</h5><a href="#">Email Signup</a><a href="#">Facebook</a><a href="#">X</a><a
+            href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-bottom">America's Greenest Airline</div>
+    </div>
+  </footer>
+
+  <script>
+    const BASE_TOTAL = 553.00;
+    const TRIP_PROTECTION_PRICE = 24.95;
+
+    const grandTotalEl = document.getElementById('grand_total');
+    const protectionTotalEl = document.getElementById('protection_total');
+    const protectionDescEl = document.getElementById('protection_desc');
+    const completePurchaseBtn = document.getElementById('completePurchase');
+
+    const protectYesOption = document.getElementById('protect_yes_option');
+    const protectNoOption = document.getElementById('protect_no_option');
+    const protectionRadios = document.querySelectorAll('input[name="trip_protection"]');
+
+    const paymentOptions = document.querySelectorAll('.pay-option');
+
+    const phoneInput = document.getElementById('phone');
+    const zipInput = document.getElementById('zip');
+
+    const cardholderNameInput = document.getElementById('cardholder_name');
+    const cardNumberInput = document.getElementById('card_number');
+    const expiryInput = document.getElementById('expiry');
+    const cvvInput = document.getElementById('cvv');
+
+    function getSelectedPaymentMethod() {
+      return document.querySelector('input[name="pay"]:checked')?.value || 'card';
+    }
+
+    paymentOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        paymentOptions.forEach(item => item.classList.remove('active'));
+        option.classList.add('active');
+        const radio = option.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+        clearPaymentFieldErrors();
+      });
+    });
+
+    function updateProtectionSummary() {
+      const selectedRadio = document.querySelector('input[name="trip_protection"]:checked');
+
+      let protectionTotal = 0;
+      let description = 'Not Selected';
+
+      if (selectedRadio) {
+        if (selectedRadio.value === 'yes') {
+          protectionTotal = TRIP_PROTECTION_PRICE;
+          description = 'Yes, protect my trip';
+        } else {
+          description = 'No thanks, I will take the risk';
+        }
+      }
+
+      const grandTotal = BASE_TOTAL + protectionTotal;
+
+      protectYesOption.classList.toggle('active', selectedRadio?.value === 'yes');
+      protectNoOption.classList.toggle('active', selectedRadio?.value === 'no');
+
+      protectionTotalEl.textContent = '$' + protectionTotal.toFixed(2);
+      protectionDescEl.textContent = description;
+      grandTotalEl.textContent = '$' + grandTotal.toFixed(2);
+    }
+
+    protectionRadios.forEach(radio => {
+      radio.addEventListener('change', updateProtectionSummary);
+    });
+
+    phoneInput.addEventListener('input', (e) => {
+      let x = e.target.value.replace(/\D/g, '').slice(0, 10);
+      if (x.length > 6) e.target.value = `${x.slice(0, 3)}-${x.slice(3, 6)}-${x.slice(6)}`;
+      else if (x.length > 3) e.target.value = `${x.slice(0, 3)}-${x.slice(3)}`;
+      else e.target.value = x;
+    });
+
+    zipInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+    });
+
+    cardNumberInput.addEventListener('input', (e) => {
+      const digits = e.target.value.replace(/\D/g, '').slice(0, 16);
+      e.target.value = digits.replace(/(.{4})/g, '$1 ').trim();
+    });
+
+    expiryInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '').slice(0, 4);
+      if (value.length >= 3) {
+        e.target.value = `${value.slice(0, 2)}/${value.slice(2)}`;
+      } else {
+        e.target.value = value;
+      }
+    });
+
+    cvvInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+    });
+
+    function setFieldError(fieldId, message) {
+      const field = document.getElementById(fieldId + '_field');
+      if (!field) return;
+      field.classList.add('invalid');
+      const error = field.querySelector('.error');
+      if (error) error.textContent = message;
+    }
+
+    function clearFieldError(fieldId) {
+      const field = document.getElementById(fieldId + '_field');
+      if (!field) return;
+      field.classList.remove('invalid');
+      const error = field.querySelector('.error');
+      if (error) error.textContent = '';
+    }
+
+    function clearPaymentFieldErrors() {
+      ['cardholder_name', 'card_number', 'expiry', 'cvv'].forEach(clearFieldError);
+    }
+
+    function validateExpiry(value) {
+      if (!/^\d{2}\/\d{2}$/.test(value)) return false;
+
+      const [monthStr, yearStr] = value.split('/');
+      const month = Number(monthStr);
+      const year = Number(yearStr);
+
+      if (month < 1 || month > 12) return false;
+
+      const now = new Date();
+      const currentMonth = now.getMonth() + 1;
+      const currentYear = now.getFullYear() % 100;
+
+      if (year < currentYear) return false;
+      if (year === currentYear && month < currentMonth) return false;
+
+      return true;
+    }
+
+    function validateForm() {
+      let valid = true;
+
+      const data = {
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        first_name: document.getElementById('first_name').value.trim(),
+        last_name: document.getElementById('last_name').value.trim(),
+        zip: document.getElementById('zip').value.trim(),
+        cardholder_name: cardholderNameInput.value.trim(),
+        card_number: cardNumberInput.value.trim(),
+        expiry: expiryInput.value.trim(),
+        cvv: cvvInput.value.trim()
+      };
+
+      ['email', 'phone', 'first_name', 'last_name', 'zip', 'cardholder_name', 'card_number', 'expiry', 'cvv'].forEach(clearFieldError);
+
+      if (data.email === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        setFieldError('email', 'Please enter a valid email address.');
+        valid = false;
+      }
+
+      if (data.phone === '' || !/^\d{3}-\d{3}-\d{4}$/.test(data.phone)) {
+        setFieldError('phone', 'Phone number must be in the format 999-999-9999.');
+        valid = false;
+      }
+
+      const namePattern = /^[A-Z][a-zA-Z]*(?:[ -][A-Z][a-zA-Z]*)*$/;
+
+      if (data.first_name === '' || !namePattern.test(data.first_name)) {
+        setFieldError('first_name', 'First name: each part must start with a capital letter and contain only letters.');
+        valid = false;
+      }
+
+      if (data.last_name === '' || !namePattern.test(data.last_name)) {
+        setFieldError('last_name', 'Last name: each part must start with a capital letter and contain only letters.');
+        valid = false;
+      }
+
+      if (data.zip === '' || !/^\d{5}$/.test(data.zip)) {
+        setFieldError('zip', 'Zip code must be five digit 12345.');
+        valid = false;
+      }
+
+      if (getSelectedPaymentMethod() === 'card') {
+        if (data.cardholder_name === '' || !namePattern.test(data.cardholder_name)) {
+          setFieldError('cardholder_name', 'Cardholder name must start with a capital letter and contain only letters.');
+          valid = false;
+        }
+
+        const cardDigits = data.card_number.replace(/\s/g, '');
+        if (!/^\d{16}$/.test(cardDigits)) {
+          setFieldError('card_number', 'Card number must be 16 digits.');
+          valid = false;
+        }
+
+        if (!validateExpiry(data.expiry)) {
+          setFieldError('expiry', 'Enter a valid future date in MM/YY format.');
+          valid = false;
+        }
+
+        if (!/^\d{3,4}$/.test(data.cvv)) {
+          setFieldError('cvv', 'CVV must be 3 or 4 digits.');
+          valid = false;
+        }
+      }
+
+      return valid;
+    }
+
+    completePurchaseBtn.addEventListener('click', () => {
+      if (validateForm()) {
+        window.location.href = 'Confirmation page-Booking.html';
+      }
+    });
+
+    updateProtectionSummary();
+  </script>
+</body>
+
+</html>
