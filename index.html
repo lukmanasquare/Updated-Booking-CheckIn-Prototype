@@ -94,6 +94,22 @@
       height: 14px;
       background: rgba(255, 255, 255, 0.28);
     }
+    .academic-disclaimer-banner {
+  position: absolute;
+  top: -34px;
+  left: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  z-index: 50;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
 
     .alert-bar {
       background: var(--teal);
@@ -229,6 +245,15 @@
     .widget-body {
       padding: 24px;
     }
+
+    .project-disclaimer{
+  background:#ffffff;
+  padding:20px;
+  text-align:center;
+  font-size:14px;
+  color:#555;
+  border-top:1px solid #ddd;
+}
 
     .trip-row {
       display: flex;
@@ -1237,6 +1262,9 @@
 
   <section class="hero">
     <div class="hero-inner">
+      <div class="academic-disclaimer-banner">
+  Independent Academic UX Redesign Concept · Not affiliated with or endorsed by Frontier Airlines
+</div>
       <div class="widget">
         <div class="widget-top-row">
           <button class="widget-top-link active-primary">Flight</button>
@@ -1564,11 +1592,13 @@
         </div>
       </div>
 
-      <div class="home-footer-bottom">
-        <span>Copyright © 2026 Frontier Airlines</span>
-        <span class="footer-sep">|</span>
-        <span>All Rights Reserved</span>
-      </div>
+      <div class="project-disclaimer">
+  <p>
+    This project is an independent academic UX redesign created for
+    educational and portfolio purposes. Frontier Airlines is not
+    affiliated with, has not reviewed, and has not endorsed this work.
+  </p>
+</div>
     </div>
   </footer>
 
